@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web VydFnt</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="noise-overlay"></div>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">
+        <span class="logo-text">Vyd<span class="logo-accent">Fnt</span></span>
+        <span class="logo-dot"></span>
+      </a>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link active">Profil</a></li>
+        <li><a href="#about" class="nav-link">Tentang</a></li>
+        <li><a href="#skills" class="nav-link">Keahlian</a></li>
+        <li><a href="#projects" class="nav-link">Project</a></li>
+        <li><a href="#certificates" class="nav-link">Sertifikat</a></li>
+        <li><a href="#testimonials" class="nav-link">Testimoni</a></li>
+        <li><a href="#contact" class="nav-link">Kontak</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle tema">
+          <span class="theme-icon sun"><i class="fa-solid fa-sun"></i></span>
+          <span class="theme-icon moon"><i class="fa-solid fa-moon"></i></span>
+          <span class="toggle-thumb"></span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <div class="bg-orb orb-1"></div>
+      <div class="bg-orb orb-2"></div>
+      <div class="bg-orb orb-3"></div>
+      <div class="grid-lines"></div>
+    </div>
+
+    <div class="hero-container">
+      <div class="hero-content" data-aos="fade-right">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Tersedia untuk kolaborasi</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="title-line">Halo, Saya</span>
+          <span class="title-name glitch" data-text="VydFnt">VydFnt</span>
+        </h1>
+        <div class="hero-roles">
+          <span class="role-prefix">Saya seorang</span>
+          <div class="role-rotator">
+            <span class="role-item active">Pelajar</span>
+            <span class="role-item">Pemula</span>
+            <span class="role-item">Front-End Developer</span>
+            <span class="role-item">Pengangguran</span>
+            <span class="role-item">Gold Laner</span>
+          </div>
+        </div>
+        <p class="hero-desc">
+          Membangun pengalaman digital yang memukau dengan kode yang bersih dan desain yang intuitif. 
+          Berfokus pada performa, aksesibilitas, dan estetika modern.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">
+            <span>Lihat Project</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            <span>Hubungi Saya</span>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num" data-count="7">0</span>
+            <span class="stat-label">Sertifikat</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num" data-count="6">0</span>
+            <span class="stat-label">Kategori Project</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num" data-count="7">0</span>
+            <span class="stat-label">Teknologi</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-aos="fade-left">
+        <div class="photo-wrapper">
+          <div class="photo-frame">
+            <img src="L.jpg" alt="VydFnt Profile Photo" class="profile-photo" />
+            <div class="photo-overlay"></div>
+          </div>
+          <div class="photo-ring ring-1"></div>
+          <div class="photo-ring ring-2"></div>
+          <div class="floating-badge badge-html">
+            <i class="fa-brands fa-html5"></i> HTML5
+          </div>
+          <div class="floating-badge badge-css">
+            <i class="fa-brands fa-css3-alt"></i> CSS3
+          </div>
+          <div class="floating-badge badge-js">
+            <i class="fa-brands fa-js"></i> JS
+          </div>
+          <div class="floating-badge badge-py">
+            <i class="fa-brands fa-python"></i> Python
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 01</span>
+        <h2 class="section-title">Tentang <span class="accent">Saya</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text" data-aos="fade-right">
+          <p class="about-intro">
+            Seorang <strong>pengembang web</strong> yang bersemangat dengan hasrat mendalam terhadap 
+            teknologi dan desain. Saya percaya bahwa kode yang baik bukan hanya yang berfungsi, 
+            tetapi juga yang mudah dibaca dan dipelihara.
+          </p>
+          <p class="about-body">
+            Perjalanan saya dimulai dari keingintahuan sederhana tentang bagaimana website bekerja, 
+            dan berkembang menjadi dedikasi penuh dalam menguasai berbagai teknologi web modern. 
+            Saya terus belajar dan bereksperimen dengan tools terbaru untuk menghadirkan solusi 
+            digital terbaik.
+          </p>
+          <p class="about-body">
+            Di luar coding, saya tertarik dengan desain UI/UX, algoritma, dan eksplorasi 
+            kecerdasan buatan untuk membantu meningkatkan produktivitas dalam pengembangan software.
+          </p>
+          <div class="about-details">
+            <div class="detail-row">
+              <span class="detail-label"><i class="fa-solid fa-location-dot"></i> Lokasi</span>
+              <span class="detail-value">Indonesia</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label"><i class="fa-solid fa-graduation-cap"></i> Status</span>
+              <span class="detail-value">Pelajar & Developer</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label"><i class="fa-solid fa-language"></i> Bahasa</span>
+              <span class="detail-value">Indonesia</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label"><i class="fa-solid fa-heart"></i> Minat</span>
+              <span class="detail-value">Web Dev, Matematika, Catur</span>
+            </div>
+          </div>
+          <a href="#contact" class="btn btn-primary mt-4">
+            <span>Mari Berkolaborasi</span>
+            <i class="fa-solid fa-handshake"></i>
+          </a>
+        </div>
+
+        <div class="about-cards" data-aos="fade-left">
+          <div class="info-card card-1">
+            <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+            <h3>Clean Code</h3>
+            <p>Menulis kode yang bersih, terstruktur, dan mudah dipahami oleh tim.</p>
+          </div>
+          <div class="info-card card-2">
+            <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+            <h3>Fast Learner</h3>
+            <p>Cepat beradaptasi dengan teknologi dan framework baru.</p>
+          </div>
+          <div class="info-card card-3">
+            <div class="card-icon"><i class="fa-solid fa-palette"></i></div>
+            <h3>UI Focused</h3>
+            <p>Memperhatikan detail desain untuk pengalaman pengguna terbaik.</p>
+          </div>
+          <div class="info-card card-4">
+            <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+            <h3>AI Enthusiast</h3>
+            <p>Memanfaatkan AI tools untuk meningkatkan produktivitas coding.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills" id="skills">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 02</span>
+        <h2 class="section-title">Keahlian & <span class="accent">Teknologi</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-wrapper">
+        <div class="skills-group" data-aos="fade-up">
+          <h3 class="skills-group-title">
+            <i class="fa-solid fa-terminal"></i> Bahasa Pemrograman
+          </h3>
+          <div class="skills-grid">
+            <div class="skill-card" data-skill="HTML5" data-level="90">
+              <div class="skill-icon html"><i class="fa-brands fa-html5"></i></div>
+              <span class="skill-name">HTML5</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+              <span class="skill-pct">90%</span>
+            </div>
+            <div class="skill-card" data-skill="CSS3" data-level="85">
+              <div class="skill-icon css"><i class="fa-brands fa-css3-alt"></i></div>
+              <span class="skill-name">CSS3</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+              <span class="skill-pct">65%</span>
+            </div>
+            <div class="skill-card" data-skill="JavaScript" data-level="80">
+              <div class="skill-icon js"><i class="fa-brands fa-js"></i></div>
+              <span class="skill-name">JavaScript</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+              <span class="skill-pct">70%</span>
+            </div>
+            <div class="skill-card" data-skill="Python" data-level="75">
+              <div class="skill-icon py"><i class="fa-brands fa-python"></i></div>
+              <span class="skill-name">Python</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="45"></div></div>
+              <span class="skill-pct">45%</span>
+            </div>
+            <div class="skill-card" data-skill="Java" data-level="65">
+              <div class="skill-icon java"><i class="fa-brands fa-java"></i></div>
+              <span class="skill-name">Java</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="35"></div></div>
+              <span class="skill-pct">35%</span>
+            </div>
+            <div class="skill-card" data-skill="C" data-level="60">
+              <div class="skill-icon c"><i class="fa-solid fa-c"></i></div>
+              <span class="skill-name">C</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="20"></div></div>
+              <span class="skill-pct">20%</span>
+            </div>
+            <div class="skill-card" data-skill="C++" data-level="55">
+              <div class="skill-icon cpp"><span>C+</span></div>
+              <span class="skill-name">C+</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="5"></div></div>
+              <span class="skill-pct">5%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-group" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="skills-group-title">
+            <i class="fa-solid fa-wrench"></i> Teknologi & Tools
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-icon vscode">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <span class="tool-name">VS Code</span>
+              <span class="tool-desc">Code Editor</span>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon kiro">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <span class="tool-name">Kiro AI</span>
+              <span class="tool-desc">AI Assistant</span>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon chatgpt">
+                <i class="fa-solid fa-comment-dots"></i>
+              </div>
+              <span class="tool-name">ChatGPT</span>
+              <span class="tool-desc">AI Assistant</span>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon gemini">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <span class="tool-name">Gemini</span>
+              <span class="tool-desc">AI Assistant</span>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon claude">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </div>
+              <span class="tool-name">Claude</span>
+              <span class="tool-desc">AI Assistant</span>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon notepad">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+              <span class="tool-name">Notepad</span>
+              <span class="tool-desc">Text Editor</span>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon zed">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <span class="tool-name">Zed</span>
+              <span class="tool-desc">Code Editor</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 03</span>
+        <h2 class="section-title">Kategori <span class="accent">Project</span></h2>
+        <div class="section-line"></div>
+        <p class="section-desc">Koleksi project yang telah saya kerjakan dalam berbagai kategori</p>
+      </div>
+
+      <div class="project-filters" data-aos="fade-up">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="grafik">Grafik</button>
+        <button class="filter-btn" data-filter="jam">Jam</button>
+        <button class="filter-btn" data-filter="kalkulator">Kalkulator</button>
+        <button class="filter-btn" data-filter="kuis">Kuis</button>
+        <button class="filter-btn" data-filter="permainan">Permainan</button>
+        <button class="filter-btn" data-filter="utilitas">Utilitas</button>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+
+        <div class="project-category-card" data-category="grafik" data-aos="zoom-in">
+          <div class="pcat-header">
+            <div class="pcat-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="pcat-badge">0 Project</div>
+          </div>
+          <h3 class="pcat-title">Grafik</h3>
+          <p class="pcat-desc">Visualisasi data dalam berbagai bentuk grafik interaktif</p>
+          <ul class="pcat-list">
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+          </ul>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+
+        <div class="project-category-card" data-category="jam" data-aos="zoom-in" data-aos-delay="100">
+          <div class="pcat-header">
+            <div class="pcat-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="pcat-badge">0 Project</div>
+          </div>
+          <h3 class="pcat-title">Jam</h3>
+          <p class="pcat-desc">Aplikasi jam dengan berbagai tampilan dan fitur waktu</p>
+          <ul class="pcat-list">
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+          </ul>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+
+        <div class="project-category-card" data-category="kalkulator" data-aos="zoom-in" data-aos-delay="200">
+          <div class="pcat-header">
+            <div class="pcat-icon"><i class="fa-solid fa-calculator"></i></div>
+            <div class="pcat-badge">0 Project</div>
+          </div>
+          <h3 class="pcat-title">Kalkulator</h3>
+          <p class="pcat-desc">Berbagai jenis kalkulator untuk kebutuhan perhitungan</p>
+          <ul class="pcat-list">
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+          </ul>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+
+        <div class="project-category-card" data-category="kuis" data-aos="zoom-in" data-aos-delay="300">
+          <div class="pcat-header">
+            <div class="pcat-icon"><i class="fa-solid fa-question-circle"></i></div>
+            <div class="pcat-badge">0 Project</div>
+          </div>
+          <h3 class="pcat-title">Kuis</h3>
+          <p class="pcat-desc">Aplikasi kuis interaktif dengan berbagai tema</p>
+          <ul class="pcat-list">
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+          </ul>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+
+        <div class="project-category-card" data-category="permainan" data-aos="zoom-in" data-aos-delay="400">
+          <div class="pcat-header">
+            <div class="pcat-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="pcat-badge">0 Project</div>
+          </div>
+          <h3 class="pcat-title">Permainan</h3>
+          <p class="pcat-desc">Mini game browser yang menyenangkan dan interaktif</p>
+          <ul class="pcat-list">
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+          </ul>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+
+        <div class="project-category-card" data-category="utilitas" data-aos="zoom-in" data-aos-delay="500">
+          <div class="pcat-header">
+            <div class="pcat-icon"><i class="fa-solid fa-tools"></i></div>
+            <div class="pcat-badge">0 Project</div>
+          </div>
+          <h3 class="pcat-title">Utilitas</h3>
+          <p class="pcat-desc">Tools berguna untuk kebutuhan sehari-hari</p>
+          <ul class="pcat-list">
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+            <li><i class="fa-solid fa-chevron-right"></i> Segera</li>
+          </ul>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="certificates" id="certificates">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 04</span>
+        <h2 class="section-title">Sertifikat <span class="accent">Saya</span></h2>
+        <div class="section-line"></div>
+        <p class="section-desc">Pencapaian dan sertifikasi yang telah saya raih — klik untuk melihat sertifikat</p>
+      </div>
+
+      <div class="cert-grid">
+
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="0"
+             data-index="0"
+             data-cert-img="sertifikat/cert-ai.jpg"
+             data-cert-title="Belajar Dasar AI"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2025"
+             data-cert-icon="fa-solid fa-brain"
+             data-cert-color="#e53e3e"
+             data-cert-desc="Memahami konsep dasar kecerdasan buatan, machine learning, dan penerapannya dalam kehidupan sehari-hari.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-1"><i class="fa-solid fa-brain"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">01</span>
+            <h3 class="cert-card-title">Belajar Dasar AI</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="60"
+             data-index="1"
+             data-cert-img="sertifikat/cert-js.jpg"
+             data-cert-title="Dasar Pemrograman JavaScript"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2025"
+             data-cert-icon="fa-brands fa-js"
+             data-cert-color="#f7df1e"
+             data-cert-desc="Menguasai fondasi pemrograman dengan JavaScript modern, mencakup variabel, fungsi, OOP, dan DOM manipulation.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-2"><i class="fa-brands fa-js"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">02</span>
+            <h3 class="cert-card-title">Dasar Pemrograman JavaScript</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="120"
+             data-index="2"
+             data-cert-img="sertifikat/cert-frontend-pemula.jpg"
+             data-cert-title="Front-End Web untuk Pemula"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2025"
+             data-cert-icon="fa-solid fa-desktop"
+             data-cert-color="#38bdf8"
+             data-cert-desc="Membangun tampilan web yang menarik dan responsif menggunakan HTML, CSS, serta prinsip-prinsip desain UI yang baik.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-3"><i class="fa-solid fa-desktop"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">03</span>
+            <h3 class="cert-card-title">Front-End Web untuk Pemula</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="180"
+             data-index="3"
+             data-cert-img="sertifikat/cert-web-dasar.jpg"
+             data-cert-title="Dasar Pemrograman Web"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2025"
+             data-cert-icon="fa-brands fa-html5"
+             data-cert-color="#e34f26"
+             data-cert-desc="Menguasai HTML, CSS, dan dasar-dasar web development termasuk struktur dokumen, styling, dan semantik web.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-4"><i class="fa-brands fa-html5"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">04</span>
+            <h3 class="cert-card-title">Dasar Pemrograman Web</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="240"
+             data-index="4"
+             data-cert-img="sertifikat/cert-frontend-fundamental.jpg"
+             data-cert-title="Fundamental Front-End Web Dev"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2026"
+             data-cert-icon="fa-solid fa-code"
+             data-cert-color="#a78bfa"
+             data-cert-desc="Pengembangan front-end tingkat lanjut mencakup Web Components, SPA, module bundler, dan praktik terbaik modern.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-5"><i class="fa-solid fa-code"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">05</span>
+            <h3 class="cert-card-title">Fundamental Front-End Web Dev</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="300"
+             data-index="5"
+             data-cert-img="sertifikat/cert-manajemen-proyek.jpg"
+             data-cert-title="Dasar Manajemen Proyek"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2026"
+             data-cert-icon="fa-solid fa-list-check"
+             data-cert-color="#34d399"
+             data-cert-desc="Mengelola proyek dengan metodologi yang efektif dan efisien, mencakup perencanaan, eksekusi, dan monitoring proyek.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-6"><i class="fa-solid fa-list-check"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">06</span>
+            <h3 class="cert-card-title">Dasar Manajemen Proyek</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+        <div class="cert-card" data-aos="fade-up" data-aos-delay="360"
+             data-index="6"
+             data-cert-img="sertifikat/cert-c.jpg"
+             data-cert-title="Memulai Pemrograman Dengan C"
+             data-cert-platform="Dicoding Indonesia"
+             data-cert-date="2026"
+             data-cert-icon="fa-solid fa-c"
+             data-cert-color="#60a5fa"
+             data-cert-desc="Belajar dasar-dasar pemrograman menggunakan bahasa C, mencakup tipe data, kontrol alur, fungsi, array, dan pointer.">
+          <div class="cert-img-area">
+            <div class="cert-placeholder-img cert-pi-7"><i class="fa-solid fa-c"></i></div>
+            <div class="cert-hover-overlay"><span><i class="fa-solid fa-expand"></i> Lihat Sertifikat</span></div>
+          </div>
+          <div class="cert-card-body">
+            <span class="cert-num">07</span>
+            <h3 class="cert-card-title">Memulai Pemrograman Dengan C</h3>
+            <span class="cert-card-platform">Dicoding Indonesia</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="cert-lightbox" id="certLightbox">
+    <div class="clb-backdrop" id="clbBackdrop"></div>
+    <div class="clb-container">
+      <button class="clb-close" id="clbClose" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+      <button class="clb-nav clb-prev" id="clbPrev" aria-label="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="clb-nav clb-next" id="clbNext" aria-label="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="clb-inner">
+        <div class="clb-img-side">
+          <div class="clb-img-frame" id="clbImgFrame"></div>
+          <div class="clb-counter" id="clbCounter">1 / 7</div>
+        </div>
+        <div class="clb-info-side">
+          <div class="clb-verified"><i class="fa-solid fa-circle-check"></i> Terverifikasi</div>
+          <p class="clb-platform" id="clbPlatform">Dicoding Indonesia</p>
+          <h2 class="clb-title" id="clbTitle">Judul Sertifikat</h2>
+          <p class="clb-desc" id="clbDesc">Deskripsi sertifikat.</p>
+          <div class="clb-meta">
+            <div class="clb-meta-row">
+              <i class="fa-regular fa-calendar"></i>
+              <div><span class="clb-meta-label">Tahun</span><span class="clb-meta-val" id="clbDate">2024</span></div>
+            </div>
+            <div class="clb-meta-row">
+              <i class="fa-solid fa-building-columns"></i>
+              <div><span class="clb-meta-label">Penerbit</span><span class="clb-meta-val">Dicoding Indonesia</span></div>
+            </div>
+            <div class="clb-meta-row">
+              <i class="fa-solid fa-certificate"></i>
+              <div><span class="clb-meta-label">Status</span><span class="clb-meta-val clb-valid">Valid ✓</span></div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-primary clb-dl-btn" id="clbDownload" target="_blank">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Sertifikat
+          </a>
+        </div>
+      </div>
+      <div class="clb-dots" id="clbDots"></div>
+    </div>
+  </div>
+
+  <section class="testimonials" id="testimonials">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 05</span>
+        <h2 class="section-title">Apa Kata <span class="testi-accent">Mereka</span></h2>
+        <div class="section-line testi-line"></div>
+        <p class="section-desc">Pendapat dari orang-orang yang pernah melihat kinerja saya</p>
+      </div>
+
+      <div class="testi-slider-wrap" data-aos="fade-up">
+
+        <div class="testi-track-outer">
+          <div class="testi-track-inner" id="testiTrack">
+
+            <div class="testi-slide">
+              <div class="testi-quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+              <p class="testi-slide-text">"Dia (VydFnt) adalah seorang pemula yang ingin coba coba belajar dunia pemrograman"</p>
+              <div class="testi-slide-author">
+                <div class="testi-slide-avatar">A</div>
+                <div class="testi-slide-info">
+                  <span class="testi-slide-name">Alex</span>
+                  <span class="testi-slide-role">Analis</span>
+                </div>
+                <div class="testi-slide-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+              <p class="testi-slide-text">"Vydfnt bisa memberikan project terbaik untuk anda"</p>
+              <div class="testi-slide-author">
+                <div class="testi-slide-avatar">HW</div>
+                <div class="testi-slide-info">
+                  <span class="testi-slide-name">Harry Wilson</span>
+                  <span class="testi-slide-role">Developer</span>
+                </div>
+                <div class="testi-slide-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+              <p class="testi-slide-text">"Dia bisa ngoding di notepad😱"</p>
+              <div class="testi-slide-author">
+                <div class="testi-slide-avatar">MJ</div>
+                <div class="testi-slide-info">
+                  <span class="testi-slide-name">Michael Jackson</span>
+                  <span class="testi-slide-role">Gamer</span>
+                </div>
+                <div class="testi-slide-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+              <p class="testi-slide-text">"Dia sangat hebat</p>
+              <div class="testi-slide-author">
+                <div class="testi-slide-avatar">NF</div>
+                <div class="testi-slide-info">
+                  <span class="testi-slide-name">M. Skibidi Magma</span>
+                  <span class="testi-slide-role">Mahasigma</span>
+                </div>
+                <div class="testi-slide-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+              <p class="testi-slide-text">"Vydfnt memiliki web yang sangat hebat "</p>
+              <div class="testi-slide-author">
+                <div class="testi-slide-avatar">MM</div>
+                <div class="testi-slide-info">
+                  <span class="testi-slide-name">Mahmud Mulyono</span>
+                  <span class="testi-slide-role">Manajemen</span>
+                </div>
+                <div class="testi-slide-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="testi-controls">
+          <button class="testi-nav-btn" id="testiPrev" aria-label="Sebelumnya">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <div class="testi-dots" id="testiDots"></div>
+          <button class="testi-nav-btn" id="testiNext" aria-label="Berikutnya">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 06</span>
+        <h2 class="section-title">Kontak <span class="accent">Saya</span></h2>
+        <div class="section-line"></div>
+        <p class="section-desc">Punya ide atau project? Mari kita diskusikan!</p>
+      </div>
+
+      <div class="contact-wrapper">
+        <div class="contact-info" data-aos="fade-right">
+          <h3 class="contact-heading">Hubungi Melalui</h3>
+          <p class="contact-subtext">
+            Saya terbuka untuk kolaborasi, freelance, atau sekadar ngobrol 
+            seputar teknologi dan pengembangan web.
+          </p>
+
+          <div class="contact-platforms">
+            <a href="https://wa.link/vq5v9v" target="_blank" class="platform-card whatsapp">
+              <div class="platform-icon"><i class="fa-brands fa-whatsapp"></i></div>
+              <div class="platform-info">
+                <span class="platform-name">WhatsApp</span>
+                <span class="platform-desc">Chat langsung & cepat</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square platform-arrow"></i>
+            </a>
+
+            <a href="https://www.instagram.com/davidfnt.11/" target="_blank" class="platform-card instagram">
+              <div class="platform-icon"><i class="fa-brands fa-instagram"></i></div>
+              <div class="platform-info">
+                <span class="platform-name">Instagram</span>
+                <span class="platform-desc">Follow & DM di IG</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square platform-arrow"></i>
+            </a>
+
+            <a href="https://github.com/DiendShikii" target="_blank" class="platform-card github">
+              <div class="platform-icon"><i class="fa-brands fa-github"></i></div>
+              <div class="platform-info">
+                <span class="platform-name">GitHub</span>
+                <span class="platform-desc">Lihat kode & repository</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square platform-arrow"></i>
+            </a>
+
+            <a href="https://www.tiktok.com/@fanata_geats" target="_blank" class="platform-card tiktok">
+              <div class="platform-icon"><i class="fa-brands fa-tiktok"></i></div>
+              <div class="platform-info">
+                <span class="platform-name">Tiktok</span>
+                <span class="platform-desc">Follow & DM di Tiktok</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square platform-arrow"></i>
+            </a>
+
+            <a href="https://www.youtube.com/@RRQEVOSONICDAVID" target="_blank" class="platform-card youtube">
+              <div class="platform-icon"><i class="fa-brands fa-youtube"></i></div>
+              <div class="platform-info">
+                <span class="platform-name">Youtube</span>
+                <span class="platform-desc">Suscribe</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square platform-arrow"></i>
+            </a>
+
+            <a href="mailto:rrqeovsonicdavid@gmail.com" class="platform-card email">
+              <div class="platform-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="platform-info">
+                <span class="platform-name">Email</span>
+                <span class="platform-desc">Kirim pesan formal</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square platform-arrow"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-form-wrapper" data-aos="fade-left">
+          <form class="contact-form" id="contactForm">
+            <h3 class="form-heading">Kirim Pesan</h3>
+            <div class="form-group">
+              <label for="name">Nama Lengkap</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="name" placeholder="Masukkan nama Anda" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="nama@email.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subjek</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-tag"></i>
+                <input type="text" id="subject" placeholder="Topik pesan Anda" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Pesan</label>
+              <div class="textarea-wrapper">
+                <textarea id="message" rows="5" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-full">
+              <span>Kirim Pesan</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">Vyd<span class="accent">Fnt</span></span>
+          <p>Membangun masa depan digital, satu baris kode pada satu waktu.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#home">Profil</a>
+          <a href="#about">Tentang</a>
+          <a href="#skills">Keahlian</a>
+          <a href="#projects">Project</a>
+          <a href="#certificates">Sertifikat</a>
+          <a href="#contact">Kontak</a>
+        </div>
+        <div class="footer-socials">
+          <a href="https://wa.link/vq5v9v" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/davidfnt.11/" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://github.com/DiendShikii" class="social-icon"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.tiktok.com/@fanata_geats" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@RRQEVOSONICDAVID" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+          <a href="mailto:rrqeovsonicdavid@gmail.com" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 <span class="accent">VydFnt</span>. Dibuat dengan menggunakan HTML, CSS & JS</p>
+        <a href="#home" class="back-top"><i class="fa-solid fa-arrow-up"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="toastMsg">Pesan berhasil dikirim!</span>
+  </div>
+
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">Vyd<span>Fnt</span></div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
