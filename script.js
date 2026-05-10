@@ -78,25 +78,43 @@ window.addEventListener("scroll", () => {
     const top = sec.offsetTop - 100;
     if (window.scrollY >= top) current = sec.getAttribute("id");
   });
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === "#" + current) link.classList.add("active");
-  });
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === "#" + current) link.classList.add("active");
+    });
 }, { passive: true });
 
 const hamburger = document.getElementById("hamburger");
 const navMenu   = document.getElementById("navMenu");
 
+function openMenu() {
+  hamburger.classList.add("active");
+  navMenu.classList.add("open");
+  document.body.classList.add("nav-open");
+}
+
+function closeMenu() {
+  hamburger.classList.remove("active");
+  navMenu.classList.remove("open");
+  document.body.classList.remove("nav-open");
+}
+
 hamburger && hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navMenu.classList.toggle("open");
+  navMenu.classList.contains("open") ? closeMenu() : openMenu();
+});
+
+navMenu && navMenu.addEventListener("click", (e) => {
+  const drawerLeft = navMenu.getBoundingClientRect().left;
+  if (e.clientX < drawerLeft) closeMenu();
+});
+
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeMenu();
 });
 
 navLinks.forEach(link => {
-  link.addEventListener("click", () => {
-    hamburger && hamburger.classList.remove("active");
-    navMenu  && navMenu.classList.remove("open");
-  });
+  link.addEventListener("click", () => closeMenu());
 });
 
 function revealOnScroll() {
@@ -239,7 +257,7 @@ filterBtns.forEach(btn => {
 
   function updateDots(idx) {
     dotsWrap.querySelectorAll(".testi-dot").forEach((d, i) =>
-      d.classList.toggle("active", i === idx));
+    d.classList.toggle("active", i === idx));
   }
 
   function goTo(idx) {
@@ -267,12 +285,12 @@ filterBtns.forEach(btn => {
     if (e.key === "ArrowRight") goTo(current + 1);
   });
 
-  let startX = 0;
-  track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener("touchend",   e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
-  });
+    let startX = 0;
+    track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener("touchend",   e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+    });
 })();
 
 const contactForm = document.getElementById("contactForm");
@@ -283,8 +301,8 @@ function showToast(message, type = "success") {
   if (!toast) return;
   toastMsg.textContent = message;
   toast.querySelector("i").className = type === "success"
-    ? "fa-solid fa-check-circle"
-    : "fa-solid fa-exclamation-circle";
+  ? "fa-solid fa-check-circle"
+  : "fa-solid fa-exclamation-circle";
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 3500);
 }
@@ -345,12 +363,12 @@ function createParticles() {
       width:           size + "px",
       height:          size + "px",
       background:      "var(--accent)",
-      borderRadius:    "50%",
-      left:            x + "%",
-      bottom:          "-10px",
-      opacity:         opacity,
-      animation:       `particleRise ${dur}s ${delay}s ease-in-out infinite`,
-      pointerEvents:   "none",
+                  borderRadius:    "50%",
+                  left:            x + "%",
+                  bottom:          "-10px",
+                  opacity:         opacity,
+                  animation:       `particleRise ${dur}s ${delay}s ease-in-out infinite`,
+                  pointerEvents:   "none",
     });
 
     hero.appendChild(particle);
@@ -360,12 +378,12 @@ function createParticles() {
     const style = document.createElement("style");
     style.id = "particleStyle";
     style.textContent = `
-      @keyframes particleRise {
-        0%   { transform: translateY(0) translateX(0);   opacity: 0; }
-        10%  { opacity: var(--op, 0.15); }
-        90%  { opacity: var(--op, 0.15); }
-        100% { transform: translateY(-110vh) translateX(${Math.random()>0.5?"+":"-"}${Math.floor(Math.random()*100)}px); opacity: 0; }
-      }
+    @keyframes particleRise {
+      0%   { transform: translateY(0) translateX(0);   opacity: 0; }
+      10%  { opacity: var(--op, 0.15); }
+      90%  { opacity: var(--op, 0.15); }
+      100% { transform: translateY(-110vh) translateX(${Math.random()>0.5?"+":"-"}${Math.floor(Math.random()*100)}px); opacity: 0; }
+    }
     `;
     document.head.appendChild(style);
   }
@@ -379,10 +397,10 @@ createParticles();
   const cursor = document.createElement("span");
   cursor.textContent = "_";
   cursor.style.cssText = `
-    color: var(--accent);
-    animation: blink 1s step-end infinite;
-    margin-left: 2px;
-    font-weight: 400;
+  color: var(--accent);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+  font-weight: 400;
   `;
   if (!document.getElementById("blinkStyle")) {
     const s = document.createElement("style");
@@ -428,9 +446,9 @@ if (window.matchMedia("(hover: hover)").matches) {
     left:       "0",
     height:     "3px",
     background: "var(--accent)",
-    zIndex:     "99999",
-    transition: "width 0.1s linear",
-    width:      "0%",
+                zIndex:     "99999",
+                transition: "width 0.1s linear",
+                width:      "0%",
   });
   document.body.appendChild(bar);
 
@@ -473,12 +491,11 @@ document.querySelectorAll(".cert-card").forEach(card => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Trigger skill bar animation on initial load if visible
   setTimeout(() => {
     animateSkillBars();
     revealOnScroll();
     initCounters();
-  }, 2400); // After loader
+  }, 2400);
 });
 
 console.log("%cVydFnt Portfolio", "color: #e53e3e; font-size: 24px; font-weight: bold; font-family: monospace;");
@@ -517,7 +534,7 @@ console.log("%cDibuat dengan ❤ menggunakan HTML, CSS & Vanilla JS", "color: #8
 
   function updateDots(idx) {
     dotsWrap.querySelectorAll(".clb-dot").forEach((d, i) =>
-      d.classList.toggle("active", i === idx));
+    d.classList.toggle("active", i === idx));
   }
 
   function goto(idx) {
@@ -537,10 +554,10 @@ console.log("%cDibuat dengan ❤ menggunakan HTML, CSS & Vanilla JS", "color: #8
     img.onload = () => { imgFrame.innerHTML = ""; imgFrame.appendChild(img); };
     img.onerror = () => {
       imgFrame.innerHTML = `
-        <div class="clb-placeholder">
-          <i class="${iconCls}" style="color:${iconClr}"></i>
-          <small>Tempatkan file gambar di:<br><code>sertifikat/</code> folder</small>
-        </div>`;
+      <div class="clb-placeholder">
+      <i class="${iconCls}" style="color:${iconClr}"></i>
+      <small>Tempatkan file gambar di:<br><code>sertifikat/</code> folder</small>
+      </div>`;
     };
     img.src = imgSrc;
     img.alt = cardTitle;
@@ -587,6 +604,7 @@ console.log("%cDibuat dengan ❤ menggunakan HTML, CSS & Vanilla JS", "color: #8
   prevBtn   && prevBtn.addEventListener("click", () => goto(current - 1));
   nextBtn   && nextBtn.addEventListener("click", () => goto(current + 1));
 
+
   document.addEventListener("keydown", (e) => {
     if (!lightbox.classList.contains("open")) return;
     if (e.key === "Escape")      close();
@@ -594,10 +612,10 @@ console.log("%cDibuat dengan ❤ menggunakan HTML, CSS & Vanilla JS", "color: #8
     if (e.key === "ArrowRight")  goto(current + 1);
   });
 
-  let swipeStartX = 0;
-  lightbox.addEventListener("touchstart", e => { swipeStartX = e.touches[0].clientX; }, { passive: true });
-  lightbox.addEventListener("touchend", e => {
-    const diff = swipeStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goto(current + (diff > 0 ? 1 : -1));
-  });
+    let swipeStartX = 0;
+    lightbox.addEventListener("touchstart", e => { swipeStartX = e.touches[0].clientX; }, { passive: true });
+    lightbox.addEventListener("touchend", e => {
+      const diff = swipeStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goto(current + (diff > 0 ? 1 : -1));
+    });
 })();
