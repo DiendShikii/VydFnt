@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Permainan</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="permainan.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="noise-overlay"></div>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="nav-logo">
+        <span class="logo-text">Vyd<span class="logo-accent">Fnt</span></span>
+        <span class="logo-dot"></span>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../../index.html#home" class="nav-link">Profil</a></li>
+        <li><a href="../../index.html#about" class="nav-link">Tentang</a></li>
+        <li><a href="../../index.html#skills" class="nav-link">Keahlian</a></li>
+        <li><a href="../../index.html#projects" class="nav-link active">Project</a></li>
+        <li><a href="../../index.html#certificates" class="nav-link">Sertifikat</a></li>
+        <li><a href="../../index.html#testimonials" class="nav-link">Testimoni</a></li>
+        <li><a href="../../index.html#contact" class="nav-link">Kontak</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle tema">
+          <span class="theme-icon sun"><i class="fa-solid fa-sun"></i></span>
+          <span class="theme-icon moon"><i class="fa-solid fa-moon"></i></span>
+          <span class="toggle-thumb"></span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="game-page-hero section-container">
+    <a href="../../index.html#projects" class="game-back-link">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Halaman Utama
+    </a>
+    <span class="section-tag">Kategori: </span>
+    <h1 class="game-page-title">Project <span class="accent">Permainan</span></h1>
+    <p class="game-page-desc">
+      Kumpulan beberapa permainan berbasis browser yang anda bisa mainkan
+    </p>
+    <div class="game-status-note">
+      <i class="fa-solid fa-circle-info"></i> Status: belum dapat dimainkan (project dalam proses pembuatan)
+    </div>
+  </section>
+
+  <section class="section-container">
+    <div class="games-grid">
+
+      <div class="game-card" data-aos="zoom-in">
+        <div class="game-preview">
+          <span class="game-preview-tag">Strategi</span>
+          <div class="preview-chess" id="previewChess"></div>
+        </div>
+        <div class="game-card-body">
+          <h3 class="game-card-title">Catur</h3>
+          <p class="game-card-desc">Papan catur klasik 8x8 dengan desain minimalis bertema gelap, lengkap dengan bidak hitam-putih.</p>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <div class="game-card-foot">
+            <span class="game-card-players"><i class="fa-solid fa-user-group"></i> 2 Pemain</span>
+            <span class="game-card-btn"><i class="fa-solid fa-hourglass-half"></i> Segera</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-card" data-aos="zoom-in" data-aos-delay="100">
+        <div class="game-preview">
+          <span class="game-preview-tag">Klasik</span>
+          <div class="preview-ttt">
+            <div class="x">X</div><div></div><div class="o">O</div>
+            <div></div><div class="x">X</div><div></div>
+            <div class="o">O</div><div></div><div class="x">X</div>
+          </div>
+        </div>
+        <div class="game-card-body">
+          <h3 class="game-card-title">Tic Tac Toe</h3>
+          <p class="game-card-desc">Permainan silang-bulat 3x3 dengan animasi sederhana dan tampilan kartu bersih khas tema situs.</p>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <div class="game-card-foot">
+            <span class="game-card-players"><i class="fa-solid fa-user-group"></i> 2 Pemain</span>
+            <span class="game-card-btn"><i class="fa-solid fa-hourglass-half"></i> Segera</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-card" data-aos="zoom-in" data-aos-delay="200">
+        <div class="game-preview">
+          <span class="game-preview-tag">Logika</span>
+          <div class="preview-sudoku" id="previewSudoku"></div>
+        </div>
+        <div class="game-card-body">
+          <h3 class="game-card-title">Sudoku</h3>
+          <p class="game-card-desc">Grid angka 9x9 dengan pemisah blok 3x3 yang jelas, dirancang untuk kenyamanan bermain logika.</p>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <div class="game-card-foot">
+            <span class="game-card-players"><i class="fa-solid fa-user"></i> 1 Pemain</span>
+            <span class="game-card-btn"><i class="fa-solid fa-hourglass-half"></i> Segera</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-card" data-aos="zoom-in" data-aos-delay="300">
+        <div class="game-preview">
+          <span class="game-preview-tag">Arkade</span>
+          <div class="preview-snake" id="previewSnake"></div>
+        </div>
+        <div class="game-card-body">
+          <h3 class="game-card-title">Ular Klasik</h3>
+          <p class="game-card-desc">Permainan ular jadul ala Nokia — kendalikan ular, makan buah, dan jangan sampai menabrak diri sendiri!</p>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <div class="game-card-foot">
+            <span class="game-card-players"><i class="fa-solid fa-user"></i> 1 Pemain</span>
+            <span class="game-card-btn"><i class="fa-solid fa-hourglass-half"></i> Segera</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-card" data-aos="zoom-in" data-aos-delay="400">
+        <div class="game-preview">
+          <span class="game-preview-tag">Puzzle</span>
+          <div class="preview-watersort">
+            <div class="ws-tube"><div class="ws-c1"></div><div class="ws-c2"></div><div class="ws-c1"></div><div class="ws-c3"></div></div>
+            <div class="ws-tube"><div class="ws-c2"></div><div class="ws-c3"></div></div>
+            <div class="ws-tube"><div class="ws-c4"></div><div class="ws-c1"></div><div class="ws-c4"></div></div>
+            <div class="ws-tube"></div>
+          </div>
+        </div>
+        <div class="game-card-body">
+          <h3 class="game-card-title">Water Sort</h3>
+          <p class="game-card-desc">Puzzle penyortiran warna cairan ke dalam tabung, dengan tampilan tabung kaca bergaya neon.</p>
+          <div class="pcat-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <div class="game-card-foot">
+            <span class="game-card-players"><i class="fa-solid fa-user"></i> 1 Pemain</span>
+            <span class="game-card-btn"><i class="fa-solid fa-hourglass-half"></i> Segera</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">Vyd<span class="accent">Fnt</span></span>
+          <p>Membangun masa depan digital, satu baris kode pada satu waktu.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../../index.html#home">Profil</a>
+          <a href="../../index.html#about">Tentang</a>
+          <a href="../../index.html#skills">Keahlian</a>
+          <a href="../../index.html#projects">Project</a>
+          <a href="../../index.html#certificates">Sertifikat</a>
+          <a href="../../index.html#contact">Kontak</a>
+        </div>
+        <div class="footer-socials">
+          <a href="https://wa.link/vq5v9v" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/davidfnt.11/" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://github.com/DiendShikii" class="social-icon"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.tiktok.com/@fanata_geats" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@RRQEVOSONICDAVID" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+          <a href="mailto:rrqeovsonicdavid@gmail.com" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 <span class="accent">VydFnt</span>. Dibuat dengan menggunakan HTML, CSS & JS</p>
+        <a href="#" class="back-top"><i class="fa-solid fa-arrow-up"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">Vyd<span>Fnt</span></div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <script src="../../script.js"></script>
+  <script src="permainan.js"></script>
+</body>
+</html>
