@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Sudoku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="sudoku.css">
+</head>
+<body>
+
+<section id="screen-start" class="screen active">
+  <div class="fade-in" style="display:flex;flex-direction:column;align-items:center;">
+    <div class="badge-circle"><span>81</span></div>
+    <div class="grid-preview" id="preview-grid"></div>
+    <div class="title-block">
+      <p class="eyebrow">Permainan Teka-Teki Angka</p>
+      <h1>Game <em>Sudoku</em></h1>
+      <p>Isi setiap baris, kolom, dan kotak 3×3 dengan angka 1 sampai 9.</p>
+    </div>
+    <button class="btn-primary" id="btn-start">Mulai Permainan!</button>
+  </div>
+</section>
+
+<section id="screen-modes" class="screen">
+  <div class="fade-in" style="width:100%;">
+    <div class="modes-header">
+      <p class="eyebrow">Langkah 1 dari 2</p>
+      <h2>Pilih Tingkat Kesulitan</h2>
+      <p>Semakin sedikit angka bantuan, semakin ganas papannya.</p>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-card" data-mode="easy">
+        <div class="seal">41</div>
+        <h3>Easy</h3>
+        <p class="clues">41 angka bantuan</p>
+        <p class="tagline">Pemanasan buat pemula.</p>
+        <p class="best" data-best="easy">Rekor tercepat: —</p>
+      </button>
+      <button class="mode-card" data-mode="medium">
+        <div class="seal">32</div>
+        <h3>Medium</h3>
+        <p class="clues">32 angka bantuan</p>
+        <p class="tagline">Bukan seorang pemula lagi. Mulai perlu mikir.</p>
+        <p class="best" data-best="medium">Rekor tercepat: —</p>
+      </button>
+      <button class="mode-card" data-mode="hard">
+        <div class="seal">25</div>
+        <h3>Hard</h3>
+        <p class="clues">25 angka bantuan</p>
+        <p class="tagline">Butuh strategi, bukan tebakan.</p>
+        <p class="best" data-best="hard">Rekor tercepat: —</p>
+      </button>
+      <button class="mode-card" data-mode="bayern">
+        <div class="seal">18</div>
+        <h3>Bayern 2020</h3>
+        <p class="clues">18 angka bantuan</p>
+        <p class="tagline">Sixtuple winners. Primenya menakutkan🥶😈.</p>
+        <p class="best" data-best="bayern">Rekor tercepat: —</p>
+      </button>
+    </div>
+    <div style="text-align:center;">
+      <button class="back-link" id="btn-back-to-start">← Kembali</button>
+    </div>
+  </div>
+</section>
+
+<section id="screen-loading" class="screen">
+  <div class="spinner"></div>
+  <p class="loading-note">Menyusun papan sudoku...</p>
+</section>
+
+<section id="screen-game" class="screen">
+  <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
+    <div class="game-topbar">
+      <span class="mode-tag" id="game-mode-tag">Easy</span>
+      <div class="timer-box" id="timer">00:00</div>
+      <span class="best-box" id="game-best-note">Rekor: —</span>
+    </div>
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+    </div>
+    <div class="numpad" id="numpad"></div>
+    <p class="mistakes-note" id="mistakes-note"></p>
+    <div class="game-actions">
+      <button class="action-btn" id="btn-restart">Papan Baru</button>
+      <button class="action-btn" id="btn-menu">Menu Utama</button>
+    </div>
+  </div>
+</section>
+
+<div class="overlay" id="win-overlay">
+  <div class="win-card">
+    <p class="eyebrow" style="text-align:center;">Selesai!</p>
+    <h2 id="win-title">Papan Terpecahkan</h2>
+    <div class="time-final" id="win-time">00:00</div>
+    <p class="record-note" id="win-record"></p>
+    <div class="win-actions">
+      <button class="action-btn" id="win-again">Main Lagi</button>
+      <button class="action-btn" id="win-menu">Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<footer class="credit">@2026 VydFnt</footer>
+
+<script src="sudoku.js"></script>
+</body>
+</html>
