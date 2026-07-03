@@ -33,6 +33,8 @@ body{
     var(--paper);
   overflow-x:hidden;
   position:relative;
+  -webkit-user-select: none;
+  user-select: none;
 }
 body::before{
   content:"";
