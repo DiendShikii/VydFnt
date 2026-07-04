@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ttt.css">
+</head>
+<body>
+
+<div class="app">
+  <main class="stage">
+    <section id="screen-start" class="screen active">
+      <div class="notebook-card">
+        <div class="spiral"></div>
+        <div class="card-content">
+          <p class="eyebrow">Buku Catatan Permainan</p>
+          <h1 class="title">Tic-Tac<br>Toe</h1>
+          <div class="doodles">
+            <svg viewBox="0 0 100 100"><path d="M20,20 L80,80" stroke="#2F5FA8" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M80,20 L20,80" stroke="#2F5FA8" stroke-width="10" stroke-linecap="round" fill="none"/></svg>
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" stroke="#C43D4B" stroke-width="10" fill="none"/></svg>
+            <svg viewBox="0 0 100 100"><path d="M20,20 L80,80" stroke="#2F5FA8" stroke-width="10" stroke-linecap="round" fill="none" opacity=".35"/><path d="M80,20 L20,80" stroke="#2F5FA8" stroke-width="10" stroke-linecap="round" fill="none" opacity=".35"/></svg>
+          </div>
+          <p class="subtitle">Satu papan, sembilan kotak, tak terbatas cara untuk menang. Ambil pena, giliranmu duluan.</p>
+          <button class="btn btn-primary" id="btn-start">Mulai Main</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-mode" class="screen">
+      <div class="notebook-card">
+        <div class="spiral"></div>
+        <div class="card-content">
+          <button class="btn-back" id="btn-back-1">← Kembali</button>
+          <h2 class="title small">Pilih Level</h2>
+          <p class="subtitle">Seberapa berani kamu melawan lawanmu hari ini?</p>
+          <div class="mode-list">
+            <button class="mode-card" data-mode="easy">
+              <span class="mode-pencil">✏️</span>
+              <span><span class="mode-name">Easy</span><span class="mode-desc">Lawan santai, asal tebak kotak</span></span>
+            </button>
+            <button class="mode-card" data-mode="medium">
+              <span class="mode-pencil">✏️✏️</span>
+              <span><span class="mode-name">Medium</span><span class="mode-desc">Mulai mikir, sesekali menyerang balik</span></span>
+            </button>
+            <button class="mode-card" data-mode="hard">
+              <span class="mode-pencil">✏️✏️✏️</span>
+              <span><span class="mode-name">Hard</span><span class="mode-desc">Nyaris tak terkalahkan. Serius.</span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-game" class="screen">
+      <div class="notebook-card wide">
+        <div class="spiral"></div>
+        <div class="card-content">
+          <div class="game-top">
+            <button class="btn-back" id="btn-back-2">← Menu</button>
+          </div>
+          <span class="badge" id="mode-badge">Easy</span>
+          <div class="status-row">
+            <div class="turn-indicator" id="turn-indicator">Giliranmu (X)</div>
+            <div class="score-row">
+              <div class="score-chip x"><span>X</span><b id="score-x">0</b></div>
+              <div class="score-chip draw"><span>=</span><b id="score-d">0</b></div>
+              <div class="score-chip o"><span>O</span><b id="score-o">0</b></div>
+            </div>
+          </div>
+          <div class="board" id="board"></div>
+          <button class="btn btn-secondary" id="btn-restart">Main Lagi</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© 2026 VydFnt</footer>
+</div>
+
+<script src="ttt.js"></script>
+</body>
+</html>
