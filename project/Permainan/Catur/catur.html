@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<link rel="stylesheet" href="catur.css">
+</head>
+<body>
+<div id="app">
+
+  <section id="screen-start" class="screen active">
+    <div class="start-wrap">
+      <div class="crest">&#9812;</div>
+      <div class="brand-eyebrow">Meja Turnamen Digital</div>
+      <h1 class="title">CATUR</h1>
+      <p class="subtitle">Ukir setiap langkah, Kuasai papan, dan Taklukkan lawanmu.</p>
+      <div class="rule"></div>
+      <button class="btn btn-primary" id="btn-start">Mulai Permainan</button>
+      <div class="mini-board-deco">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-mode" class="screen">
+    <div class="mode-wrap">
+      <h2 class="section-title">Pilih Lawanmu</h2>
+      <p class="section-sub">Setiap tingkat punya karakter berbeda. Pilih dengan bijak.</p>
+      <div class="mode-grid">
+
+        <div class="mode-card" data-mode="easy">
+          <div class="mode-icon">&#9823;</div>
+          <div class="mode-name">Easy</div>
+          <div class="mode-desc">Cocok untuk pemula. Lawan sering ceroboh dan mudah membuka celah.</div>
+          <div class="mode-pawns"><span class="filled">&#9823;</span><span>&#9823;</span><span>&#9823;</span><span>&#9823;</span><span>&#9823;</span></div>
+          <div class="mode-cta">Mainkan &rarr;</div>
+        </div>
+
+        <div class="mode-card" data-mode="medium">
+          <div class="mode-icon">&#9822;</div>
+          <div class="mode-name">Medium</div>
+          <div class="mode-desc">Lawan mulai berpikir 2 langkah ke depan. Butuh strategi yang rapi.</div>
+          <div class="mode-pawns"><span class="filled">&#9823;</span><span class="filled">&#9823;</span><span>&#9823;</span><span>&#9823;</span><span>&#9823;</span></div>
+          <div class="mode-cta">Mainkan &rarr;</div>
+        </div>
+
+        <div class="mode-card" data-mode="hard">
+          <div class="mode-icon">&#9820;</div>
+          <div class="mode-name">Hard</div>
+          <div class="mode-desc">Lawan menghitung jauh ke depan dan jarang memberi ampun.</div>
+          <div class="mode-pawns"><span class="filled">&#9823;</span><span class="filled">&#9823;</span><span class="filled">&#9823;</span><span>&#9823;</span><span>&#9823;</span></div>
+          <div class="mode-cta">Mainkan &rarr;</div>
+        </div>
+
+        <div class="mode-card twoplayer" data-mode="two-player">
+          <div class="mode-icon">&#9812;&#9818;</div>
+          <div class="mode-name">2 Pemain</div>
+          <div class="mode-desc">Main bergantian dengan teman di satu perangkat. Tanpa AI, murni skill kalian.</div>
+          <div class="mode-pawns"><span>Human</span><span style="margin-left:auto">vs</span><span>Human</span></div>
+          <div class="mode-cta">Mainkan &rarr;</div>
+        </div>
+
+      </div>
+      <button class="back-link" id="btn-mode-back">&larr; Kembali</button>
+    </div>
+  </section>
+
+  <section id="screen-color" class="screen">
+    <div class="mode-wrap" style="max-width:640px;">
+      <h2 class="section-title">Pilih Warna Bidakmu</h2>
+      <p class="section-sub">Tentukan sisi mana yang akan kau perjuangkan.</p>
+      <div class="mode-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+
+        <div class="mode-card" data-color="w">
+          <div class="mode-icon">&#9812;</div>
+          <div class="mode-name">Putih</div>
+          <div class="mode-desc">Melangkah lebih dulu. Klasik dan penuh inisiatif.</div>
+          <div class="mode-cta">Pilih Putih &rarr;</div>
+        </div>
+
+        <div class="mode-card" data-color="b">
+          <div class="mode-icon">&#9818;</div>
+          <div class="mode-name">Hitam</div>
+          <div class="mode-desc">Menunggu dan membalas. Sabar tapi mematikan.</div>
+          <div class="mode-cta">Pilih Hitam &rarr;</div>
+        </div>
+
+      </div>
+      <button class="back-link" id="btn-color-back">&larr; Kembali</button>
+    </div>
+  </section>
+
+  <section id="screen-game" class="screen">
+    <div class="game-wrap">
+
+      <div class="board-column">
+        <div>
+          <div class="hand-label">Bidak Tertangkap &middot; Hitam</div>
+          <div class="captured-row" id="captured-black"></div>
+        </div>
+        <div class="board-frame">
+          <div class="board" id="board"></div>
+        </div>
+        <div>
+          <div class="hand-label">Bidak Tertangkap &middot; Putih</div>
+          <div class="captured-row" id="captured-white"></div>
+        </div>
+      </div>
+
+      <div class="side-panel">
+        <div class="panel-box">
+          <div class="mode-tag" id="mode-tag">Mode</div>
+          <div class="turn-indicator" style="margin-top:10px;">
+            <div class="turn-dot w" id="turn-dot"></div>
+            <div class="turn-text" id="turn-text">Giliran Putih</div>
+          </div>
+          <div class="status-line" id="status-line"></div>
+          <div class="thinking hidden" id="thinking-indicator">
+            <span class="dotpulse"></span><span class="dotpulse"></span><span class="dotpulse"></span>
+            <span>AI sedang berpikir&hellip;</span>
+          </div>
+        </div>
+
+        <div class="panel-box">
+          <div class="panel-title">Riwayat Langkah</div>
+          <div class="moves-list" id="moves-list"></div>
+        </div>
+
+        <div class="panel-box">
+          <div class="control-row">
+            <button class="btn-ghost" id="btn-undo">&#8630; Undo</button>
+            <button class="btn-ghost" id="btn-restart">&#8635; Ulangi</button>
+          </div>
+          <div class="control-row" style="margin-top:10px;">
+            <button class="btn-ghost" id="btn-menu">&larr; Menu Utama</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>&copy; 2026 VydFnt</footer>
+</div>
+
+<div id="modal-promotion" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3>Promosi Bidak</h3>
+    <p>Pilih bidak baru untuk pion ini</p>
+    <div class="promo-options">
+      <div class="promo-btn" data-piece="q">&#9819;</div>
+      <div class="promo-btn" data-piece="r">&#9820;</div>
+      <div class="promo-btn" data-piece="b">&#9821;</div>
+      <div class="promo-btn" data-piece="n">&#9822;</div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-gameover" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="gameover-title">Skakmat</h3>
+    <p id="gameover-desc">Permainan berakhir.</p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btn-play-again" style="margin-top:0;">Main Lagi</button>
+      <button class="btn-ghost" id="btn-gameover-menu">Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<script src="catur.js"></script>
+</body>
+</html>
