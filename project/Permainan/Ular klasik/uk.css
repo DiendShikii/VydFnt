@@ -24,6 +24,8 @@ body{
     radial-gradient(ellipse at 50% 0%, #1d1042 0%, transparent 60%),
     radial-gradient(ellipse at 50% 100%, #0f0824 0%, transparent 60%),
     var(--bg-void);
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 h1, h2, .pixel{ font-family: 'Press Start 2P', monospace; }
