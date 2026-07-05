@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ular Klasik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="uk.css">
+</head>
+<body>
+
+<div id="app">
+  <div class="cabinet">
+
+    <div id="start-screen" class="screen active">
+      <h1 class="title">GAME</h1>
+      <div class="subtitle">Ular Klasik</div>
+      <div class="hs-chip">
+        <span class="label">HI-SCORE</span>
+        <span class="value" id="highscore-start">0</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="btn-start">Mainkan</button>
+      </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+      <div class="hud">
+        <div class="hud-item">
+          <span class="label">SCORE</span>
+          <span class="value" id="score">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="label">HI-SCORE</span>
+          <span class="value" id="highscore">0</span>
+        </div>
+        <button class="pause-btn" id="btn-pause" title="Pause" aria-label="Pause">❙❙</button>
+      </div>
+      <div class="board-wrap">
+        <canvas id="board"></canvas>
+        <div id="pause-hint" class="hidden">
+          <div>DIJEDA</div>
+          <button class="resume-btn" id="btn-resume">LANJUT</button>
+        </div>
+      </div>
+      <p class="hint">Tombol Panah dan WASD untuk belok</p>
+      <p class="hint">Tap kiri/kanan/atas/bawah layar untuk belok</p>
+      <p class="hint">Spasi/P = Pause</p>
+    </div>
+
+    <div id="gameover-screen" class="screen">
+      <h2 class="go-title">GAME OVER</h2>
+      <div id="new-badge" class="hidden">NEW HIGH SCORE!</div>
+      <div class="final-stats">
+        <div class="box">
+          <span class="label">SCORE</span>
+          <span class="val" id="final-score">0</span>
+        </div>
+        <div class="box">
+          <span class="label">HI-SCORE</span>
+          <span class="val" id="final-highscore">0</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="btn-restart">MAIN LAGI</button>
+        <button class="btn secondary" id="btn-menu">MENU</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>&copy; 2026 VydFnt</footer>
+</div>
+
+<script src="uk.js"></script>
+</body>
+</html>
