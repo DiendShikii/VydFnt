@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Sort Puzzle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="wsort.css">
+</head>
+<body>
+
+<div id="bubble-field"></div>
+
+<div class="app">
+
+  <section class="screen active" id="screen-start">
+    <svg class="flask-hero" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="6" width="60" height="16" rx="7" fill="none" stroke="#3fd8c7" stroke-width="4"/>
+      <path d="M40 20 L40 60 L14 128 Q10 140 24 140 L96 140 Q110 140 106 128 L80 60 L80 20"
+            fill="rgba(63,216,199,0.08)" stroke="#3fd8c7" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M17 132 Q26 108 40 108 Q54 130 66 108 Q78 130 103 132 Q108 138 100 138 L24 138 Q14 138 17 132 Z" fill="#3fd8c7"/>
+      <path d="M45 108 Q54 122 66 108 Q64 90 58 78 Q52 90 45 108Z" fill="#f7b750" opacity="0.9"/>
+    </svg>
+    <div class="eyebrow">Puzzle Cair</div>
+    <h1 class="brand">Water Sort</h1>
+    <p class="tagline">Pisahkan setiap warna ke dalam tabungnya sendiri. 50 level di tiap mode, progres &amp; rekor tersimpan otomatis.</p>
+    <button class="btn btn-primary" id="btn-start">Start Game</button>
+    <div class="start-footer-hint" id="start-hint">Ada 3 tingkat kesulitan menantimu di langkah berikutnya</div>
+  </section>
+
+  <section class="screen" id="screen-mode">
+    <div class="mode-wrap">
+      <div class="mode-header">
+        <div class="eyebrow">Pilih Mode</div>
+        <h2>Seberapa berani kamu hari ini?</h2>
+      </div>
+      <div class="mode-grid">
+        <button class="mode-card mode-easy" data-mode="easy">
+          <div class="tier-drops"><span class="drop"></span></div>
+          <h3>Easy</h3>
+          <p>50 level santai, mulai dari 3 warna. Cocok buat pemanasan.</p>
+          <div class="progress-bar"><div class="progress-bar-fill" id="progress-easy"></div></div>
+          <div class="best"><span id="progress-label-easy">0/50 selesai</span><span id="best-easy">--:--</span></div>
+        </button>
+        <button class="mode-card mode-medium" data-mode="medium">
+          <div class="tier-drops"><span class="drop"></span><span class="drop"></span></div>
+          <h3>Medium</h3>
+          <p>50 level, warna bertambah tiap etape. Butuh strategi.</p>
+          <div class="progress-bar"><div class="progress-bar-fill" id="progress-medium"></div></div>
+          <div class="best"><span id="progress-label-medium">0/50 selesai</span><span id="best-medium">--:--</span></div>
+        </button>
+        <button class="mode-card mode-hard" data-mode="hard">
+          <div class="tier-drops"><span class="drop"></span><span class="drop"></span><span class="drop"></span></div>
+          <h3>Hard</h3>
+          <p>50 level tersulit, ruang kosong makin sempit di akhir.</p>
+          <div class="progress-bar"><div class="progress-bar-fill" id="progress-hard"></div></div>
+          <div class="best"><span id="progress-label-hard">0/50 selesai</span><span id="best-hard">--:--</span></div>
+        </button>
+      </div>
+      <div style="text-align:center;">
+        <button class="back-link" id="btn-back-start">← kembali ke menu awal</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-levels">
+    <div class="level-wrap">
+      <div class="level-header">
+        <div class="eyebrow" id="level-mode-eyebrow">Easy</div>
+        <h2 id="level-mode-title">Pilih Level</h2>
+        <p id="level-mode-sub">0/50 level selesai</p>
+      </div>
+      <div class="level-grid" id="level-grid"></div>
+      <div class="level-footer-row">
+        <button class="back-link" id="btn-back-modes">← kembali ke mode</button>
+        <button class="reset-link" id="btn-reset-progress"><span aria-hidden="true">↺</span> Reset progres mode ini</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-game">
+    <div class="game-wrap">
+      <div class="hud">
+        <div class="hud-left"><span class="mode-pill" id="hud-mode">Easy • Level 1</span></div>
+        <div class="hud-stats">
+          <div class="stat"><div class="num" id="hud-time">00:00</div><div class="lbl">Waktu</div></div>
+          <div class="stat"><div class="num" id="hud-moves">0</div><div class="lbl">Langkah</div></div>
+          <div class="stat"><div class="num" id="hud-best">--:--</div><div class="lbl">Rekor Level</div></div>
+        </div>
+        <div class="hud-actions">
+          <button class="btn btn-ghost btn-sm" id="btn-restart">Ulangi</button>
+          <button class="btn btn-ghost btn-sm" id="btn-menu">Level</button>
+        </div>
+      </div>
+      <div class="board" id="board"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="modal-overlay" id="modal-win">
+  <div class="modal">
+    <div class="badge">🏆</div>
+    <h3 id="win-title">Level Selesai!</h3>
+    <p id="win-sub">Semua warna berhasil disortir dengan rapi.</p>
+    <div class="results">
+      <div class="stat"><div class="num" id="win-time">00:00</div><div class="lbl">Waktu</div></div>
+      <div class="stat"><div class="num" id="win-moves">0</div><div class="lbl">Langkah</div></div>
+    </div>
+    <div id="win-best-flag" class="best-flag" style="display:none;">🎉 Rekor level baru!</div>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-sm" id="btn-next-level">Level Berikutnya</button>
+      <button class="btn btn-ghost btn-sm" id="btn-win-levels">Daftar Level</button>
+      <button class="btn btn-ghost btn-sm" id="btn-win-menu">Menu</button>
+    </div>
+  </div>
+</div>
+
+<footer>&copy; 2026 VydFnt</footer>
+
+<script src="wsort.js"></script>
+</body>
+</html>
