@@ -1,10 +1,26 @@
 "use strict";
 
 window.addEventListener("load", () => {
-  setTimeout(() => {
-    const loader = document.getElementById("pageLoader");
-    if (loader) loader.classList.add("hidden");
-  }, 2200);
+  const loader = document.getElementById("pageLoader");
+  const percentEl = document.getElementById("loaderPercent");
+  const duration = 2000;
+  const start = performance.now();
+
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const value = Math.round(eased * 100);
+    if (percentEl) percentEl.textContent = value;
+
+    if (t < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      setTimeout(() => {
+        if (loader) loader.classList.add("hidden");
+      }, 200);
+    }
+  }
+  requestAnimationFrame(tick);
 });
 
 const cursorDot  = document.getElementById("cursorDot");
@@ -205,7 +221,6 @@ const projectCards = document.querySelectorAll(".project-category-card");
 
 filterBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    // Update active button
     filterBtns.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
@@ -336,7 +351,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(anchor.getAttribute("href"));
     if (target) {
       e.preventDefault();
-      const offset = 80; // navbar height
+      const offset = 80;
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: "smooth" });
     }
