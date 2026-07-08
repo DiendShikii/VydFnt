@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap');
 
-
 :root {
   --bg-primary: #080808;
   --bg-secondary: #0f0f0f;
@@ -92,20 +91,60 @@ body {
   color: var(--bg-primary);
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+::-webkit-scrollbar {
+  width: 6px;
 
-h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); line-height: 1.2; }
-a { text-decoration: none; color: inherit; }
-img { max-width: 100%; display: block; }
-ul { list-style: none; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
-input, textarea { font-family: inherit; }
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
 
-.accent { color: var(--accent); }
-.mt-4 { margin-top: 1.5rem; }
-.w-full { width: 100%; }
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+
+}
+a {
+  text-decoration: none;
+  color: inherit;
+
+}
+img {
+  max-width: 100%;
+  display: block;
+
+}
+ul {
+  list-style: none;
+
+}
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+
+}
+input, textarea {
+  font-family: inherit;
+
+}
+
+.accent {
+  color: var(--accent);
+}
+.mt-4 {
+  margin-top: 1.5rem;
+}
+.w-full {
+  width: 100%;
+}
 
 .noise-overlay {
   position: fixed;
@@ -165,37 +204,94 @@ input, textarea { font-family: inherit; }
   visibility: hidden;
   pointer-events: none;
 }
-.loader-content { text-align: center; }
-.loader-logo {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: -2px;
-  margin-bottom: 2rem;
-  animation: loaderPulse 1.5s ease-in-out infinite;
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
 }
-.loader-logo span { color: var(--accent); }
-.loader-bar {
-  width: 200px;
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-  margin: 0 auto;
+
+.loader-ring {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.loader-fill {
-  height: 100%;
-  background: var(--accent);
-  animation: loaderProgress 2s ease-in-out forwards;
-  border-radius: 2px;
+.loader-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed var(--border);
+  animation: loaderTickRotate 12s linear infinite;
 }
-@keyframes loaderPulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.5; }
+.loader-ring::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent);
+  border-right-color: var(--accent);
+  animation: loaderSpin 0.9s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
 }
-@keyframes loaderProgress {
-  from { width: 0; }
-  to { width: 100%; }
+
+.loader-percent {
+  font-family: var(--font-mono);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+  text-align: center;
+}
+.loader-percent::after {
+  content: "%";
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-left: 2px;
+}
+
+.loader-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.loader-dots::after {
+  content: "";
+  display: inline-block;
+  width: 1.2em;
+  text-align: left;
+  animation: loaderDots 1.4s steps(4, end) infinite;
+}
+
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes loaderTickRotate {
+  to { transform: rotate(-360deg); }
+}
+@keyframes loaderDots {
+  0%   { content: ""; }
+  25%  { content: "."; }
+  50%  { content: ".."; }
+  75%  { content: "..."; }
+  100% { content: ""; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-ring::before,
+  .loader-ring::after,
+  .loader-dots::after {
+    animation: none;
+  }
 }
 
 .navbar {
