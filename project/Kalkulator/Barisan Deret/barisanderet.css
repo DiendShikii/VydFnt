@@ -365,16 +365,3 @@ header.hero p{
     display:none;
 }
 .tool-result.show{ display:block; }
-
-footer{
-    text-align:center;
-    margin-top:50px;
-    color:var(--text-3);
-    font-family:var(--font-mono);
-    font-size:12px;
-}
-
-@media (max-width:520px){
-    .field-grid, .extra-grid{ grid-template-columns:1fr; }
-    .panel, .result{ padding:20px; }
-}
