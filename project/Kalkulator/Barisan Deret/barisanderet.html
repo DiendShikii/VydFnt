@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator Barisan & Deret</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="barisanderet.css">
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">Un &middot; Sn &middot; b &middot; r</span>
+    <h1>Kalkulator Barisan & Deret</h1>
+    <p>Hitung suku ke-n dan jumlah suku pada barisan/deret aritmetika maupun geometri, lengkap dengan rumus dan langkah perhitungannya.</p>
+  </header>
+
+  <div class="tab-row" role="tablist" aria-label="Pilih mode">
+    <div class="tab-btn active" id="tab-barisan" onclick="setMode('barisan')">
+      Barisan
+      <span class="sub">Mencari nilai Un</span>
+    </div>
+    <div class="tab-btn" id="tab-deret" onclick="setMode('deret')">
+      Deret
+      <span class="sub">Mencari jumlah Sn</span>
+    </div>
+  </div>
+
+  <div class="tab-row" role="tablist" aria-label="Pilih jenis">
+    <div class="tab-btn active" id="tab-aritmetika" onclick="setType('aritmetika')">
+      Aritmetika
+      <span class="sub">beda (b) tetap</span>
+    </div>
+    <div class="tab-btn" id="tab-geometri" onclick="setType('geometri')">
+      Geometri
+      <span class="sub">rasio (r) tetap</span>
+    </div>
+  </div>
+
+  <section class="glass panel">
+    <div class="panel-title" id="panel-title">Barisan Aritmetika</div>
+    <div class="field-grid">
+      <div class="field">
+        <label for="inp-a">a <span class="hint">— suku pertama (U₁)</span></label>
+        <input type="number" id="inp-a" placeholder="contoh: 3" step="any">
+      </div>
+      <div class="field" id="field-bede">
+        <label for="inp-b">b <span class="hint">— beda</span></label>
+        <input type="number" id="inp-b" placeholder="contoh: 4" step="any">
+      </div>
+      <div class="field">
+        <label for="inp-n">n <span class="hint">— suku ke-</span></label>
+        <input type="number" id="inp-n" placeholder="contoh: 10" step="1" min="1">
+      </div>
+    </div>
+    <button class="btn" onclick="hitung()">Hitung Sekarang</button>
+    <div class="error-msg" id="error-msg"></div>
+  </section>
+
+  <section class="glass result" id="result-panel">
+    <div class="result-label" id="result-label">Hasil</div>
+    <div class="result-value" id="result-value">—</div>
+
+    <div class="formula-strip" id="formula-strip"></div>
+
+    <div class="extra-grid" id="extra-grid"></div>
+  </section>
+
+  <section class="tools">
+    <button class="tools-toggle" id="tools-toggle" onclick="toggleTools()">
+      <span>Alat tambahan — cari beda / rasio / suku ke-n dari dua suku diketahui</span>
+      <span class="arrow">&#9662;</span>
+    </button>
+    <div class="tools-body" id="tools-body">
+      <div class="tools-inner">
+
+        <div class="tool-block" id="tool-aritmetika">
+          <h3>Cari Beda &amp; Suku Pertama (Aritmetika)</h3>
+          <p class="desc">Diketahui dua suku, misalnya U<sub>p</sub> dan U<sub>q</sub>, tentukan beda (b) dan suku pertama (a).</p>
+          <div class="field-grid">
+            <div class="field">
+              <label>p <span class="hint">— indeks suku 1</span></label>
+              <input type="number" id="t1-p" placeholder="contoh: 3" step="1" min="1">
+            </div>
+            <div class="field">
+              <label>Up <span class="hint">— nilai suku ke-p</span></label>
+              <input type="number" id="t1-up" placeholder="contoh: 11" step="any">
+            </div>
+            <div class="field">
+              <label>q <span class="hint">— indeks suku 2</span></label>
+              <input type="number" id="t1-q" placeholder="contoh: 7" step="1" min="1">
+            </div>
+            <div class="field">
+              <label>Uq <span class="hint">— nilai suku ke-q</span></label>
+              <input type="number" id="t1-uq" placeholder="contoh: 23" step="any">
+            </div>
+          </div>
+          <button class="btn" onclick="cariBedaAritmetika()">Cari b &amp; a</button>
+          <div class="tool-result" id="t1-result"></div>
+        </div>
+
+        <div class="tool-block" id="tool-geometri">
+          <h3>Cari Rasio &amp; Suku Pertama (Geometri)</h3>
+          <p class="desc">Diketahui dua suku, misalnya U<sub>p</sub> dan U<sub>q</sub>, tentukan rasio (r) dan suku pertama (a).</p>
+          <div class="field-grid">
+            <div class="field">
+              <label>p <span class="hint">— indeks suku 1</span></label>
+              <input type="number" id="t2-p" placeholder="contoh: 2" step="1" min="1">
+            </div>
+            <div class="field">
+              <label>Up <span class="hint">— nilai suku ke-p</span></label>
+              <input type="number" id="t2-up" placeholder="contoh: 6" step="any">
+            </div>
+            <div class="field">
+              <label>q <span class="hint">— indeks suku 2</span></label>
+              <input type="number" id="t2-q" placeholder="contoh: 5" step="1" min="1">
+            </div>
+            <div class="field">
+              <label>Uq <span class="hint">— nilai suku ke-q</span></label>
+              <input type="number" id="t2-uq" placeholder="contoh: 162" step="any">
+            </div>
+          </div>
+          <button class="btn" onclick="cariRasioGeometri()">Cari r &amp; a</button>
+          <div class="tool-result" id="t2-result"></div>
+        </div>
+
+        <div class="tool-block" id="tool-takhingga">
+          <h3>Deret Geometri Tak Hingga</h3>
+          <p class="desc">Jumlah semua suku deret geometri hingga n → ∞. Hanya konvergen (punya hasil) jika −1 &lt; r &lt; 1.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label>a <span class="hint">— suku pertama</span></label>
+              <input type="number" id="t3-a" placeholder="contoh: 8" step="any">
+            </div>
+            <div class="field">
+              <label>r <span class="hint">— rasio (−1 &lt; r &lt; 1)</span></label>
+              <input type="number" id="t3-r" placeholder="contoh: 0.5" step="any">
+            </div>
+          </div>
+          <button class="btn" onclick="hitungTakHingga()">Hitung S∞</button>
+          <div class="tool-result" id="t3-result"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>@2026 VydFnt</footer>
+
+</div>
+
+<script src="barisanderet.js"></script>
+</body>
+</html>

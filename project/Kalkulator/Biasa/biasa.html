@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="biasa.css" />
+</head>
+<body>
+
+  <div id="paymentModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-header">
+        <div class="modal-title-label">PILIH PAKET</div>
+        <h2 class="modal-title">Buka Hasil Perhitungan</h2>
+        <p class="modal-subtitle">Hitung sekali, bayar sekali. Selamanya. (beli aja gpp. Ini hanya tampilan saja dan gratis 😁)</p>
+      </div>
+
+      <div class="plan-cards">
+        <div class="plan-card" id="planPlus">
+          <div class="plan-badge">PLUS</div>
+          <div class="plan-price">Rp 500.000</div>
+          <div class="plan-desc">Bayar sekali, selamanya</div>
+          <ul class="plan-features">
+            <li>✓ Lihat hasil perhitungan</li>
+            <li>✓ Semua operasi dasar</li>
+            <li class="dim">✗ Riwayat perhitungan</li>
+          </ul>
+          <button class="btn-plan btn-plus" onclick="buyPlan('plus')">Beli Plus — Rp 500.000</button>
+        </div>
+
+        <div class="plan-card plan-card-pro" id="planPro">
+          <div class="plan-badge badge-pro">PRO</div>
+          <div class="plan-recommended">✦ TERBAIK</div>
+          <div class="plan-price pro-price">Rp 1.000.000</div>
+          <div class="plan-desc">Bayar sekali, selamanya</div>
+          <ul class="plan-features">
+            <li>✓ Lihat hasil perhitungan</li>
+            <li>✓ Semua operasi dasar</li>
+            <li>✓ Riwayat perhitungan lengkap</li>
+          </ul>
+          <button class="btn-plan btn-pro" onclick="buyPlan('pro')">Beli Pro — Rp 1.000.000</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="successNotif" class="success-overlay hidden">
+    <div class="success-box">
+      <div class="checkmark-wrapper">
+        <svg class="checkmark" viewBox="0 0 52 52">
+          <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <div class="success-title">Pembayaran Berhasil</div>
+      <div id="successPlanName" class="success-plan"></div>
+      <div id="upgradeToProHint" class="upgrade-hint hidden">
+        Ingin fitur Riwayat? <span onclick="upgradeFromSuccess()">Upgrade ke Pro →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-wrapper">
+
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-neon">Calc</span><span class="logo-calc">ulator</span>
+      </div>
+      <div id="planBadgeHeader" class="header-plan-badge hidden"></div>
+    </header>
+
+    <main class="main-layout">
+
+      <section class="calc-section">
+        <div class="calculator">
+          <div class="calc-display">
+            <div id="calcExpression" class="display-expression"></div>
+            <div id="calcInput" class="display-input">0</div>
+          </div>
+
+          <div class="calc-grid">
+            <button class="btn btn-util" onclick="clearAll()">AC</button>
+            <button class="btn btn-util" onclick="toggleSign()">+/−</button>
+            <button class="btn btn-util" onclick="percentage()">%</button>
+            <button class="btn btn-op" onclick="setOp('/')">÷</button>
+
+            <button class="btn btn-num" onclick="pressNum('7')">7</button>
+            <button class="btn btn-num" onclick="pressNum('8')">8</button>
+            <button class="btn btn-num" onclick="pressNum('9')">9</button>
+            <button class="btn btn-op" onclick="setOp('*')">×</button>
+
+            <button class="btn btn-num" onclick="pressNum('4')">4</button>
+            <button class="btn btn-num" onclick="pressNum('5')">5</button>
+            <button class="btn btn-num" onclick="pressNum('6')">6</button>
+            <button class="btn btn-op" onclick="setOp('-')">−</button>
+
+            <button class="btn btn-num" onclick="pressNum('1')">1</button>
+            <button class="btn btn-num" onclick="pressNum('2')">2</button>
+            <button class="btn btn-num" onclick="pressNum('3')">3</button>
+            <button class="btn btn-op" onclick="setOp('+')">+</button>
+
+            <button class="btn btn-num btn-zero" onclick="pressNum('0')">0</button>
+            <button class="btn btn-num" onclick="pressDot()">.</button>
+            <button class="btn btn-equals" onclick="pressEquals()">=</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="history-section hidden" id="historyPanel">
+        <div class="history-box">
+          <div class="history-header">
+            <span class="history-title">RIWAYAT</span>
+            <button class="btn-clear-history" onclick="clearHistory()">Hapus Semua</button>
+          </div>
+          <div id="historyList" class="history-list">
+            <div class="history-empty">Belum ada riwayat perhitungan.</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="upgradeBubble" class="upgrade-bubble hidden" onclick="showUpgradeToPro()">
+    <span class="bubble-icon">⚡</span>
+    <span class="bubble-text">Mau versi Pro?</span>
+  </div>
+
+  <script src="biasa.js"></script>
+</body>
+</html>
