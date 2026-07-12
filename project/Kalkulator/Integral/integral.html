@@ -17,7 +17,7 @@
 
   <header>
     <h1 class="glitch">∫ PIXEL INTEGRAL CALCULATOR ∫</h1>
-    <p class="subtitle">TURUNKAN? SALAH GAME. INI BOSS INTEGRAL.</p>
+    <p class="subtitle">TURUNKAN? SALAH GAME. INI BOSS INTEGRAL</p>
   </header>
 
   <main>
@@ -38,28 +38,50 @@
     <section class="panel result-panel pixel-corners" id="resultPanel" style="display:none;">
       <div class="result-header">
         <span class="level-badge" id="levelBadge">LV.1</span>
-        <h2>HASIL INTEGRAL ∫f(x)dx</h2>
+        <h2>INTEGRAL TAK TENTU ∫f(x)dx</h2>
       </div>
       <div class="step-note" id="stepNote"></div>
       <div class="result-display" id="resultDisplay"></div>
       <div class="exp-bar-wrap"><div class="exp-bar-fill" id="expBar"></div></div>
 
       <div class="result-actions">
-        <button id="integrateAgainBtn" class="btn btn-secondary pixel-corners">🔁 INTEGRALKAN LAGI</button>
-        <button id="copyBtn" class="btn btn-mini pixel-corners">📋 SALIN</button>
-        <button id="undoBtn" class="btn btn-mini pixel-corners">↩ UNDO</button>
-        <button id="resetBtn" class="btn btn-danger pixel-corners">✖ RESET</button>
+        <button id="integrateAgainBtn" class="btn btn-secondary pixel-corners">INTEGRALKAN LAGI</button>
+        <button id="copyBtn" class="btn btn-mini pixel-corners">SALIN</button>
+        <button id="undoBtn" class="btn btn-mini pixel-corners">UNDO</button>
+        <button id="resetBtn" class="btn btn-danger pixel-corners">RESET</button>
       </div>
     </section>
 
+    <section class="panel definite-panel pixel-corners" id="definitePanel" style="display:none;">
+      <div class="result-header">
+        <span class="level-badge boss-badge">BOSS</span>
+        <h2>INTEGRAL TENTU ∫ₐᵇ f(x) dx</h2>
+      </div>
+
+      <div class="bounds-row">
+        <div class="bound-field">
+          <label class="mini-label">BATAS BAWAH (a)</label>
+          <input type="number" id="boundA" value="0" step="any">
+        </div>
+        <div class="bound-field">
+          <label class="mini-label">BATAS ATAS (b)</label>
+          <input type="number" id="boundB" value="1" step="any">
+        </div>
+        <button id="computeDefiniteBtn" class="btn btn-primary pixel-corners">HITUNG NILAI</button>
+      </div>
+
+      <div class="definite-steps" id="definiteSteps"></div>
+      <div class="definite-result" id="definiteResult"></div>
+    </section>
+
     <section class="panel history-panel pixel-corners" id="historyPanel" style="display:none;">
-      <h3>📜 QUEST LOG — RIWAYAT INTEGRASI</h3>
+      <h3>RIWAYAT INTEGRAL</h3>
       <div id="historyList"></div>
     </section>
   </main>
 
   <footer>
-    <button id="muteBtn" class="btn btn-mini pixel-corners">🔊 SUARA: ON</button>
+    <button id="muteBtn" class="btn btn-mini pixel-corners">SUARA: ON</button>
     <p>@2026 VydFnt</p>
   </footer>
 </div>
