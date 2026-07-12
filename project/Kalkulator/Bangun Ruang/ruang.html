@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bangun Ruang</title>
+<meta name="description" content="Kalkulator volume dan luas permukaan 7 bangun ruang: Kubus, Balok, Prisma, Limas, Kerucut, Tabung, dan Bola. Bisa hitung dua arah." />
+<link rel="stylesheet" href="ruang.css" />
+</head>
+<body data-theme="dark">
+
+  <div class="bg-motion" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <header class="hero">
+    <button id="themeToggle" class="theme-toggle" aria-label="Ganti tema terang/gelap">☾</button>
+    <div class="hero-orbit" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <span class="eyebrow">Kalkulator Geometri</span>
+      <h1>Kalkulator <span class="grad-text">Bangun Ruang</span></h1>
+      <p class="hero-sub">Hitung volume dan luas permukaan untuk 7 bangun ruang dan sebaliknya. masukkan hasilnya untuk mencari salah satu sisinya.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="shape-picker" aria-label="Pilih bangun ruang">
+      <h2 class="section-title">01 Pilih Bangun Ruang</h2>
+      <div class="shape-grid" id="shapeGrid"></div>
+    </section>
+
+    <section class="calculator" id="calculatorSection">
+      <h2 class="section-title">02 Hitung</h2>
+      <div class="calc-card" id="calcCard">
+
+        <div class="calc-header">
+          <div class="calc-shape-info">
+            <div class="calc-icon" id="calcIcon"></div>
+            <div>
+              <h3 id="calcShapeName">Kubus</h3>
+              <p id="calcShapeDesc">Enam sisi persegi kongruen</p>
+            </div>
+          </div>
+          <div class="unit-select">
+            <label for="unitSelect">Satuan panjang</label>
+            <select id="unitSelect">
+              <option value="mm">mm</option>
+              <option value="cm" selected>cm</option>
+              <option value="dm">dm</option>
+              <option value="m">m</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mode-tabs" id="modeTabs"></div>
+        <div class="target-pills" id="targetPills"></div>
+        <div class="input-grid" id="inputGrid"></div>
+        <div class="helper-tool" id="helperTool"></div>
+
+        <div class="calc-actions">
+          <button id="btnHitung" class="btn-primary">Hitung</button>
+          <button id="btnReset" class="btn-ghost">Reset</button>
+        </div>
+
+        <p class="error-msg" id="errorMsg" hidden></p>
+
+        <div class="result-panel" id="resultPanel" hidden>
+          <div class="result-main">
+            <span class="result-label" id="resultLabel">Volume</span>
+            <span class="result-value" id="resultValue">0</span>
+          </div>
+          <div class="formula-strip" id="formulaStrip"></div>
+          <button id="btnCopy" class="btn-ghost small">Salin hasil</button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="history" aria-label="Riwayat perhitungan">
+      <h2 class="section-title">03 Riwayat</h2>
+      <div class="history-card">
+        <div class="history-header">
+          <p id="historyCount">Belum ada riwayat</p>
+          <button id="btnClearHistory" class="btn-ghost small">Hapus semua</button>
+        </div>
+        <ul id="historyList" class="history-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>@2026<strong>VydFnt</strong>.</p>
+  </footer>
+
+  <script src="ruang.js"></script>
+</body>
+</html>

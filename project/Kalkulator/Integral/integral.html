@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="integral.css">
+</head>
+<body>
+
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<div class="container">
+
+  <header>
+    <h1 class="glitch">∫ PIXEL INTEGRAL CALCULATOR ∫</h1>
+    <p class="subtitle">TURUNKAN? SALAH GAME. INI BOSS INTEGRAL.</p>
+  </header>
+
+  <main>
+    <section class="panel input-panel pixel-corners">
+      <label>&gt; MASUKKAN FUNGSI f(x)</label>
+      <div class="input-row">
+        <input type="text" id="exprInput" placeholder="contoh: 2x + 3x^2 - sin(x)" autocomplete="off">
+        <button id="calcBtn" class="btn btn-primary pixel-corners">∫ HITUNG</button>
+      </div>
+
+      <div class="tokens-title">SISIPKAN CEPAT</div>
+      <div class="quick-buttons" id="quickButtons"></div>
+
+      <div class="tokens-title">PRESET CONTOH</div>
+      <div class="presets-row" id="presetButtons"></div>
+    </section>
+
+    <section class="panel result-panel pixel-corners" id="resultPanel" style="display:none;">
+      <div class="result-header">
+        <span class="level-badge" id="levelBadge">LV.1</span>
+        <h2>HASIL INTEGRAL ∫f(x)dx</h2>
+      </div>
+      <div class="step-note" id="stepNote"></div>
+      <div class="result-display" id="resultDisplay"></div>
+      <div class="exp-bar-wrap"><div class="exp-bar-fill" id="expBar"></div></div>
+
+      <div class="result-actions">
+        <button id="integrateAgainBtn" class="btn btn-secondary pixel-corners">🔁 INTEGRALKAN LAGI</button>
+        <button id="copyBtn" class="btn btn-mini pixel-corners">📋 SALIN</button>
+        <button id="undoBtn" class="btn btn-mini pixel-corners">↩ UNDO</button>
+        <button id="resetBtn" class="btn btn-danger pixel-corners">✖ RESET</button>
+      </div>
+    </section>
+
+    <section class="panel history-panel pixel-corners" id="historyPanel" style="display:none;">
+      <h3>📜 QUEST LOG — RIWAYAT INTEGRASI</h3>
+      <div id="historyList"></div>
+    </section>
+  </main>
+
+  <footer>
+    <button id="muteBtn" class="btn btn-mini pixel-corners">🔊 SUARA: ON</button>
+    <p>@2026 VydFnt</p>
+  </footer>
+</div>
+
+<script src="integral.js"></script>
+</body>
+</html>

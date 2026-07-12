@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangun Datar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="datar.css">
+</head>
+<body>
+
+  <div class="notebook" id="notebook">
+    <header class="nb-header">
+      <div class="header-top">
+        <div class="title-block">
+          <h1 class="nb-title">Kalkulator Bangun Datar</h1>
+          <p class="nb-subtitle">tulis angkanya, biar dihitungin~ (luas &amp; keliling, dua arah)</p>
+        </div>
+        <div class="header-tools">
+          <label class="unit-picker" title="Satuan panjang">
+            <span>Satuan</span>
+            <select id="unitSelect">
+              <option value="mm">mm</option>
+              <option value="cm" selected>cm</option>
+              <option value="dm">dm</option>
+              <option value="m">m</option>
+              <option value="km">km</option>
+            </select>
+          </label>
+          <button class="icon-btn" id="historyToggle" type="button" title="Riwayat perhitungan">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg>
+            <span class="badge" id="historyBadge" hidden>0</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="step-tabs" id="stepTabs">
+        <div class="step-tab is-active" data-step="1"><span class="step-num">1</span><span class="step-label">Pilih Bangun</span></div>
+        <div class="step-tab" data-step="2"><span class="step-num">2</span><span class="step-label">Pilih Cara</span></div>
+        <div class="step-tab" data-step="3"><span class="step-num">3</span><span class="step-label">Isi Angka</span></div>
+        <div class="step-tab" data-step="4"><span class="step-num">4</span><span class="step-label">Hasil</span></div>
+      </div>
+    </header>
+
+    <section class="nb-section" id="step1" data-step-panel="1">
+      <p class="section-lead">Ada 8 bangun datar nih, pilih salah satu ya:</p>
+      <div class="shape-grid" id="shapeGrid">
+
+        <button class="shape-card" data-shape="persegi">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M20,18 L82,15 L85,80 L18,83 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Persegi</span>
+        </button>
+
+        <button class="shape-card" data-shape="persegiPanjang">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M10,30 L90,25 L92,70 L8,75 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Persegi Panjang</span>
+        </button>
+
+        <button class="shape-card" data-shape="segitiga">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M50,12 L88,85 L12,82 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Segitiga</span>
+        </button>
+
+        <button class="shape-card" data-shape="jajarGenjang">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M25,20 L90,18 L75,80 L10,82 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Jajar Genjang</span>
+        </button>
+
+        <button class="shape-card" data-shape="layangLayang">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M50,8 L78,42 L50,92 L25,42 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Layang-Layang</span>
+        </button>
+
+        <button class="shape-card" data-shape="belahKetupat">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M50,10 L88,50 L50,90 L12,50 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Belah Ketupat</span>
+        </button>
+
+        <button class="shape-card" data-shape="trapesium">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M25,20 L75,20 L92,80 L8,80 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Trapesium</span>
+        </button>
+
+        <button class="shape-card" data-shape="lingkaran">
+          <svg class="doodle" viewBox="0 0 100 100"><path d="M50,10 C75,10 90,30 88,52 C86,75 68,90 48,90 C28,90 12,73 12,50 C12,28 27,10 50,10 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Lingkaran</span>
+        </button>
+
+      </div>
+    </section>
+
+    <section class="nb-section is-hidden" id="step2" data-step-panel="2">
+      <button class="back-link" data-back="1">&larr; ganti bangun</button>
+      <div class="shape-heading">
+        <div class="mini-doodle" id="shapeMiniIcon"></div>
+        <div>
+          <h2 id="shapeTitle">—</h2>
+          <p id="shapeDesc" class="section-lead"></p>
+        </div>
+      </div>
+      <p class="section-lead">Mau hitung apa nih?</p>
+      <div class="mode-list" id="modeList"></div>
+    </section>
+
+    <section class="nb-section is-hidden" id="step3" data-step-panel="3">
+      <button class="back-link" data-back="2">&larr; ganti cara hitung</button>
+      <h2 id="modeTitle" class="mode-title-text">—</h2>
+      <form id="inputForm" class="input-form" autocomplete="off">
+        <div class="input-fields" id="inputFields"></div>
+        <p class="form-hint" id="formHint" hidden>Hasil hitungan negatif. coba periksa lagi angka yang kamu tulis ya.</p>
+        <div class="form-actions">
+          <button type="button" class="pencil-btn ghost" id="fillExampleBtn">✎ Isi contoh</button>
+          <button type="submit" class="pencil-btn primary" id="calcBtn">Hitung! →</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="nb-section is-hidden" id="step4" data-step-panel="4">
+      <button class="back-link" data-back="3">&larr; ubah angka</button>
+      <div class="result-page" id="resultPage">
+        <div class="stamp" id="resultStamp">✓</div>
+        <h2 id="resultShapeTitle">—</h2>
+        <p class="section-lead" id="resultModeLabel"></p>
+        <div class="work-steps" id="workSteps"></div>
+      </div>
+      <div class="form-actions">
+        <button class="pencil-btn ghost" id="copyResultBtn">⎘ Salin hasil</button>
+        <button class="pencil-btn primary" id="calcAgainBtn">Hitung lagi ↻</button>
+      </div>
+    </section>
+
+  </div>
+
+  <aside class="history-panel" id="historyPanel" aria-hidden="true">
+    <div class="history-panel-inner">
+      <div class="history-head">
+        <h3>Riwayat Catatan</h3>
+        <button class="icon-btn" id="historyClose" type="button" title="Tutup">✕</button>
+      </div>
+      <p class="section-lead" id="historyEmpty">Belum ada catatan hitungan. Yuk hitung sesuatu dulu!</p>
+      <div class="history-list" id="historyList"></div>
+      <button class="pencil-btn ghost small" id="clearHistoryBtn" hidden>Hapus semua riwayat</button>
+    </div>
+  </aside>
+  <div class="history-overlay" id="historyOverlay"></div>
+
+  <footer class="nb-footer">
+    <span>@2026<strong>VydFnt</strong></span>
+  </footer>
+
+  <script src="datar.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Turunan</title>
+<link rel="stylesheet" href="turunan.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Kalkulator Matematika</div>
+    <h1>Turunan<span class="dot">.</span></h1>
+    <p>Tulis fungsi f(x), lalu lihat setiap langkah penurunannya secara rapi. Bisa diturunkan berkali-kali tanpa mengetik ulang. tinggal tekan tombol.</p>
+  </header>
+
+  <div class="panel input-card">
+    <span class="field-label">Masukkan fungsi &nbsp;<b>f(x) =</b></span>
+    <div class="inset input-row">
+      <input id="exprInput" type="text" placeholder="contoh: 2x^2 + 5x" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div class="chip-section">
+      <p class="chip-label">Sisipkan cepat</p>
+      <div class="chips" id="insertChips"></div>
+    </div>
+
+    <div class="chip-section">
+      <p class="chip-label">Contoh fungsi</p>
+      <div class="chips" id="exampleChips"></div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-primary" id="solveBtn">Turunkan →</button>
+      <button class="btn btn-ghost" id="clearBtn">Bersihkan</button>
+    </div>
+
+    <div id="errorBox"></div>
+  </div>
+
+  <div id="results"></div>
+
+  <footer>@2026 VydFnt</footer>
+</div>
+
+<script src="turunan.js"></script>
+</body>
+</html>
