@@ -1,312 +1,419 @@
-(function(){
+(function () {
     "use strict";
 
     let audioCtx = null;
     let soundOn = true;
-    function beep(freq, dur){
-        if(!soundOn) return;
-        try{
-            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function beep(freq, dur) {
+        if (!soundOn) return;
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'square';
+            osc.type = "square";
             osc.frequency.value = freq;
             gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
             osc.connect(gain).connect(audioCtx.destination);
             osc.start();
             osc.stop(audioCtx.currentTime + dur);
-        }catch(e){ /* audio not available, fail silently */ }
+        } catch (e) {
+        }
     }
-    function beepClick(){ beep(220, 0.05); }
-    function beepSuccess(){ beep(660, 0.08); setTimeout(()=>beep(880,0.1), 90); }
-    function beepError(){ beep(120, 0.18); }
 
-    function fmtNum(n){
+    const beepClick = () => beep(220, 0.05);
+    const beepSuccess = () => { beep(660, 0.08); setTimeout(() => beep(880, 0.1), 90); };
+    const beepBoss = () => { beep(440, 0.07); setTimeout(() => beep(660, 0.07), 80); setTimeout(() => beep(990, 0.12), 160); };
+    const beepError = () => beep(120, 0.18);
+
+
+    function fmtNum(n) {
         n = Math.round(n * 1e8) / 1e8;
         if (Object.is(n, -0)) n = 0;
-        let s = n.toString();
-        return s;
+        return n.toString();
     }
 
-    function normalizeExpr(raw){
+    function normalizeExpr(raw) {
         let e = raw.toLowerCase();
-        e = e.replace(/×/g,'*').replace(/⋅/g,'*').replace(/\*\*/g,'^');
-        e = e.replace(/\s+/g,'');
-        e = e.replace(/exp\(x\)/g,'e^x');
-        e = e.replace(/π/g,'pi');
-        if(e === '') throw new Error('EXPRESI KOSONG');
+        e = e.replace(/×/g, "*").replace(/⋅/g, "*").replace(/\*\*/g, "^");
+        e = e.replace(/\s+/g, "");
+        e = e.replace(/exp\(x\)/g, "e^x");
+        if (e === "") throw new Error("EXPRESI KOSONG");
         return e;
     }
 
-    function splitTerms(expr){
-        expr = expr.replace(/\^-/g, '^~');
-        if(!/^[+-]/.test(expr)) expr = '+' + expr;
+    function splitTerms(expr) {
+        expr = expr.replace(/\^-/g, "^~");
+        if (!/^[+-]/.test(expr)) expr = "+" + expr;
         const matches = expr.match(/[+-][^+-]+/g);
-        if(!matches) throw new Error('TIDAK ADA TERM YANG DIKENALI');
-        return matches.map(t => {
-            const sign = t[0] === '-' ? -1 : 1;
-            return { sign: sign, body: t.slice(1) };
-        });
+        if (!matches) throw new Error("TIDAK ADA TERM YANG DIKENALI");
+        return matches.map((t) => ({ sign: t[0] === "-" ? -1 : 1, body: t.slice(1) }));
     }
 
-    function parseTerm(body){
-        body = body.replace(/~/g, '-');
+    function parseTerm(body) {
+        body = body.replace(/~/g, "-");
         let m;
+        const num = (g) => (g === "" || g === undefined ? 1 : parseFloat(g));
 
-        if ((m = body.match(/^(\d*\.?\d*)\*?sin\(x\)$/))) {
-            return { kind:'sin', coeff: m[1] === '' ? 1 : parseFloat(m[1]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\*?cos\(x\)$/))) {
-            return { kind:'cos', coeff: m[1] === '' ? 1 : parseFloat(m[1]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\*?tan\(x\)$/))) {
-            return { kind:'tan', coeff: m[1] === '' ? 1 : parseFloat(m[1]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\*?e\^x$/))) {
-            return { kind:'exp', coeff: m[1] === '' ? 1 : parseFloat(m[1]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\*?(\d+(?:\.\d+)?)\^x$/))) {
-            return { kind:'expBase', coeff: m[1] === '' ? 1 : parseFloat(m[1]), base: parseFloat(m[2]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\/x$/))) {
-            return { kind:'invX', coeff: m[1] === '' ? 1 : parseFloat(m[1]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\*?x\^(-?\d+(?:\.\d+)?)$/))) {
-            return { kind:'poly', coeff: m[1] === '' ? 1 : parseFloat(m[1]), power: parseFloat(m[2]) };
-        }
-        if ((m = body.match(/^(\d*\.?\d*)\*?x$/))) {
-            return { kind:'poly', coeff: m[1] === '' ? 1 : parseFloat(m[1]), power: 1 };
-        }
-        if ((m = body.match(/^(\d+(?:\.\d+)?)$/))) {
-            return { kind:'poly', coeff: parseFloat(m[1]), power: 0 };
-        }
+        if ((m = body.match(/^(\d*\.?\d*)\*?sin\(x\)$/))) return { kind: "sin", coeff: num(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?cos\(x\)$/))) return { kind: "cos", coeff: num(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?tan\(x\)$/))) return { kind: "tan", coeff: num(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?ln\(x\)$/))) return { kind: "lnAbsX", coeff: num(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?e\^x$/))) return { kind: "exp", coeff: num(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?(\d+(?:\.\d+)?)\^x$/)))
+            return { kind: "expBase", coeff: num(m[1]), base: parseFloat(m[2]) };
+        if ((m = body.match(/^(\d*\.?\d*)\/x$/))) return { kind: "poly", coeff: num(m[1]), power: -1 };
+        if ((m = body.match(/^(\d*\.?\d*)\*?x\^(-?\d+(?:\.\d+)?)$/)))
+            return { kind: "poly", coeff: num(m[1]), power: parseFloat(m[2]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?x$/))) return { kind: "poly", coeff: num(m[1]), power: 1 };
+        if ((m = body.match(/^(\d+(?:\.\d+)?)$/))) return { kind: "poly", coeff: parseFloat(m[1]), power: 0 };
+
         throw new Error('TERM "' + body.toUpperCase() + '" TIDAK DIKENALI');
     }
 
-    function integrateTerm(sign, parsed){
-        let finalCoeff, shape, explicitMul = false;
-
-        switch(parsed.kind){
-            case 'sin':
-                finalCoeff = -parsed.coeff; shape = 'cos(x)'; break;
-            case 'cos':
-                finalCoeff = parsed.coeff; shape = 'sin(x)'; break;
-            case 'tan':
-                finalCoeff = -parsed.coeff; shape = 'ln|cos(x)|'; break;
-            case 'exp':
-                finalCoeff = parsed.coeff; shape = 'e^x'; break;
-            case 'expBase': {
-                const denom = Math.log(parsed.base);
-                finalCoeff = parsed.coeff / denom;
-                shape = parsed.base + '^x';
-                explicitMul = true;
-                break;
-            }
-            case 'invX':
-                finalCoeff = parsed.coeff; shape = 'ln|x|'; break;
-            case 'poly':
-                if (parsed.power === -1){
-                    finalCoeff = parsed.coeff; shape = 'ln|x|';
-                } else {
-                    const newPower = parsed.power + 1;
-                    finalCoeff = parsed.coeff / newPower;
-                    if (newPower === 1) shape = 'x';
-                    else shape = 'x^' + fmtNum(newPower);
-                }
-                break;
-            default:
-                throw new Error('ATURAN INTEGRAL TIDAK DITEMUKAN');
-        }
-
-        finalCoeff *= sign;
-
-        const magnitude = Math.abs(finalCoeff);
-        const sign2 = finalCoeff < 0 ? '-' : '+';
-        let prefix;
-        if (explicitMul){
-            prefix = (magnitude === 1 ? '1' : fmtNum(magnitude)) + '*';
-        } else {
-            prefix = (magnitude === 1) ? '' : fmtNum(magnitude);
-        }
-        return { sign2: sign2, body: prefix + shape };
-    }
-
-    function integrateExpression(rawExpr){
+    function parseExpression(rawExpr) {
         const expr = normalizeExpr(rawExpr);
         const terms = splitTerms(expr);
-        const resultTerms = terms.map(t => integrateTerm(t.sign, parseTerm(t.body)));
-
-        let out = '';
-        resultTerms.forEach((rt, i) => {
-            if (i === 0){
-                out += (rt.sign2 === '-' ? '-' : '') + rt.body;
-            } else {
-                out += ' ' + rt.sign2 + ' ' + rt.body;
-            }
+        return terms.map((t) => {
+            const p = parseTerm(t.body);
+            return { kind: p.kind, coeff: t.sign * p.coeff, power: p.power, base: p.base };
         });
-        out += ' + C';
+    }
+
+    function integrateShapeTerm(term) {
+        switch (term.kind) {
+            case "sin":
+                return [{ kind: "cos", coeff: -term.coeff }];
+            case "cos":
+                return [{ kind: "sin", coeff: term.coeff }];
+            case "tan":
+                return [{ kind: "lnAbsCos", coeff: -term.coeff }];
+            case "exp":
+                return [{ kind: "exp", coeff: term.coeff }];
+            case "expBase": {
+                const denom = Math.log(term.base);
+                return [{ kind: "expBase", coeff: term.coeff / denom, base: term.base }];
+            }
+            case "lnAbsX":
+                return [
+                    { kind: "xlnx", coeff: term.coeff },
+                    { kind: "poly", coeff: -term.coeff, power: 1 },
+                ];
+            case "poly":
+                if (term.power === -1) return [{ kind: "lnAbsX", coeff: term.coeff }];
+                {
+                    const newPower = term.power + 1;
+                    return [{ kind: "poly", coeff: term.coeff / newPower, power: newPower }];
+                }
+            default:
+                throw new Error("ATURAN INTEGRAL TIDAK DITEMUKAN");
+        }
+    }
+
+    function integrateShapeTerms(fTerms) {
+        const out = [];
+        fTerms.forEach((t) => out.push(...integrateShapeTerm(t)));
         return out;
+    }
+
+    function needsExplicitMul(kind) {
+        return kind === "expBase" || kind === "xlnx";
+    }
+
+    function shapeToString(term) {
+        switch (term.kind) {
+            case "poly":
+                if (term.power === 1) return "x";
+                if (term.power === 0) return "1";
+                return "x^" + fmtNum(term.power);
+            case "sin": return "sin(x)";
+            case "cos": return "cos(x)";
+            case "tan": return "tan(x)";
+            case "exp": return "e^x";
+            case "expBase": return term.base + "^x";
+            case "lnAbsX": return "ln|x|";
+            case "lnAbsCos": return "ln|cos(x)|";
+            case "xlnx": return "x*ln|x|";
+            default: return "?";
+        }
+    }
+
+    function shapeTermsToDisplay(terms, withC) {
+        let out = "";
+        terms.forEach((term, i) => {
+            const magnitude = Math.abs(term.coeff);
+            const sign2 = term.coeff < 0 ? "-" : "+";
+            const shape = shapeToString(term);
+            let prefix;
+            if (magnitude === 1) {
+                prefix = "";
+            } else if (needsExplicitMul(term.kind)) {
+                prefix = fmtNum(magnitude) + "*";
+            } else {
+                prefix = fmtNum(magnitude);
+            }
+            const body = prefix + shape;
+            out += i === 0 ? (sign2 === "-" ? "-" : "") + body : " " + sign2 + " " + body;
+        });
+        if (withC) out += (terms.length ? " + " : "") + "C";
+        return out;
+    }
+
+    function evalShapeTerm(term, x) {
+        switch (term.kind) {
+            case "poly": return term.coeff * Math.pow(x, term.power);
+            case "sin": return term.coeff * Math.sin(x);
+            case "cos": return term.coeff * Math.cos(x);
+            case "tan": return term.coeff * Math.tan(x);
+            case "exp": return term.coeff * Math.exp(x);
+            case "expBase": return term.coeff * Math.pow(term.base, x);
+            case "lnAbsX": return term.coeff * Math.log(Math.abs(x));
+            case "lnAbsCos": return term.coeff * Math.log(Math.abs(Math.cos(x)));
+            case "xlnx": return term.coeff * x * Math.log(Math.abs(x));
+            default: return NaN;
+        }
+    }
+
+    function evalShapeTerms(terms, x) {
+        let total = 0;
+        for (const t of terms) {
+            const v = evalShapeTerm(t, x);
+            if (!isFinite(v)) return NaN;
+            total += v;
+        }
+        return total;
+    }
+
+    function integrateExpression(rawExpr) {
+        const fTerms = parseExpression(rawExpr);
+        const capTerms = integrateShapeTerms(fTerms);
+        const display = shapeTermsToDisplay(capTerms, true);
+        return { fTerms, capTerms, display };
     }
 
     const state = {
         history: [],
-        step: 0
+        boundA: 0,
+        boundB: 1,
     };
 
-    const exprInput = document.getElementById('exprInput');
-    const resultPanel = document.getElementById('resultPanel');
-    const resultDisplay = document.getElementById('resultDisplay');
-    const stepNote = document.getElementById('stepNote');
-    const levelBadge = document.getElementById('levelBadge');
-    const expBar = document.getElementById('expBar');
-    const historyPanel = document.getElementById('historyPanel');
-    const historyList = document.getElementById('historyList');
+    const el = {
+        exprInput: document.getElementById("exprInput"),
+ resultPanel: document.getElementById("resultPanel"),
+ resultDisplay: document.getElementById("resultDisplay"),
+ stepNote: document.getElementById("stepNote"),
+ levelBadge: document.getElementById("levelBadge"),
+ expBar: document.getElementById("expBar"),
+ historyPanel: document.getElementById("historyPanel"),
+ historyList: document.getElementById("historyList"),
+ definitePanel: document.getElementById("definitePanel"),
+ boundA: document.getElementById("boundA"),
+ boundB: document.getElementById("boundB"),
+ definiteSteps: document.getElementById("definiteSteps"),
+ definiteResult: document.getElementById("definiteResult"),
+    };
 
-    function render(){
-        if(state.history.length === 0){
-            resultPanel.style.display = 'none';
-            historyPanel.style.display = 'none';
+    function escapeHtml(s) {
+        return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function currentEntry() {
+        return state.history[state.history.length - 1] || null;
+    }
+
+
+    function renderIndefinite() {
+        if (state.history.length === 0) {
+            el.resultPanel.style.display = "none";
+            el.historyPanel.style.display = "none";
+            el.definitePanel.style.display = "none";
             return;
         }
-        resultPanel.style.display = '';
-        historyPanel.style.display = state.history.length > 0 ? '' : 'none';
+        const last = currentEntry();
 
-        const last = state.history[state.history.length - 1];
-        levelBadge.textContent = 'LV.' + state.history.length;
-        stepNote.textContent = '∫ ' + last.input + ' dx  =';
-        resultDisplay.classList.remove('error');
-        resultDisplay.textContent = last.result;
-        const pct = Math.min(100, state.history.length * 20);
-        expBar.style.width = pct + '%';
+        el.resultPanel.style.display = "";
+        el.historyPanel.style.display = "";
+        el.definitePanel.style.display = "";
 
-        historyList.innerHTML = '';
+        el.levelBadge.textContent = "LV." + state.history.length;
+        el.stepNote.textContent = "∫ " + last.input + " dx  =";
+        el.resultDisplay.classList.remove("error");
+        el.resultDisplay.textContent = last.display;
+        el.expBar.style.width = Math.min(100, state.history.length * 20) + "%";
+
+        el.historyList.innerHTML = "";
         state.history.forEach((h, idx) => {
-            const div = document.createElement('div');
-            div.className = 'history-item';
+            const div = document.createElement("div");
+            div.className = "history-item";
             div.innerHTML =
-            '<span class="h-step">STEP ' + (idx+1) + ' — ∫...dx</span>' +
-            '<span class="h-expr">' + escapeHtml(h.input) + '</span>' +
+            '<span class="h-step">STEP ' + (idx + 1) + " — ∫...dx</span>" +
+            '<span class="h-expr">' + escapeHtml(h.input) + "</span>" +
             '<span class="h-arrow">&#8594;</span>' +
-            '<span class="h-result">' + escapeHtml(h.result) + '</span>';
-            historyList.appendChild(div);
+            '<span class="h-result">' + escapeHtml(h.display) + "</span>";
+            el.historyList.appendChild(div);
         });
-        historyList.scrollTop = historyList.scrollHeight;
+        el.historyList.scrollTop = el.historyList.scrollHeight;
+        el.definiteSteps.innerHTML = "";
+        el.definiteResult.textContent = "";
     }
 
-    function escapeHtml(s){
-        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    function showError(msg){
-        resultPanel.style.display = '';
-        resultDisplay.classList.add('error');
-        resultDisplay.textContent = '⚠ GAME OVER: ' + msg;
-        stepNote.textContent = state.history.length
-        ? 'LANJUTKAN DARI STEP ' + state.history.length
-        : '';
+    function showError(msg) {
+        el.resultPanel.style.display = "";
+        el.resultDisplay.classList.add("error");
+        el.resultDisplay.textContent = "⚠ GAME OVER: " + msg;
+        el.stepNote.textContent = state.history.length ? "LANJUTKAN DARI STEP " + state.history.length : "";
         beepError();
     }
 
-    function doIntegrate(inputExpr){
-        try{
-            const result = integrateExpression(inputExpr);
-            state.history.push({ input: inputExpr, result: result });
-            render();
+    function doIntegrate(inputExpr) {
+        try {
+            const { fTerms, capTerms, display } = integrateExpression(inputExpr);
+            state.history.push({ input: inputExpr, display, fTerms, capTerms });
+            renderIndefinite();
             beepSuccess();
-        }catch(err){
-            showError(err.message || 'EKSPRESI TIDAK VALID');
+        } catch (err) {
+            showError(err.message || "EKSPRESI TIDAK VALID");
         }
     }
 
-    document.getElementById('calcBtn').addEventListener('click', () => {
-        const v = exprInput.value.trim();
-        if(!v){ showError('MASUKKAN FUNGSI DULU, PLAYER!'); return; }
-        beepClick();
-        doIntegrate(v);
-    });
+    function computeDefinite() {
+        const entry = currentEntry();
+        if (!entry) return;
 
-    exprInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') document.getElementById('calcBtn').click();
-    });
+        const a = parseFloat(el.boundA.value);
+        const b = parseFloat(el.boundB.value);
+        if (isNaN(a) || isNaN(b)) {
+            el.definiteResult.innerHTML = '<span class="def-error">⚠ BATAS a DAN b HARUS BERUPA ANGKA</span>';
+            el.definiteSteps.innerHTML = "";
+            beepError();
+            return;
+        }
+        state.boundA = a;
+        state.boundB = b;
 
-        document.getElementById('integrateAgainBtn').addEventListener('click', () => {
-            if(state.history.length === 0) return;
-            beepClick();
-            const last = state.history[state.history.length - 1];
-            const nextInput = last.result.replace(/\s*\+\s*C\s*$/,'');
-            doIntegrate(nextInput);
-        });
+        const valA = evalShapeTerms(entry.capTerms, a);
+        const valB = evalShapeTerms(entry.capTerms, b);
 
-        document.getElementById('undoBtn').addEventListener('click', () => {
-            if(state.history.length === 0) return;
-            beepClick();
-            state.history.pop();
-            render();
-        });
+        if (!isFinite(valA) || !isFinite(valB)) {
+            el.definiteResult.innerHTML =
+            '<span class="def-error">⚠ FUNGSI TIDAK TERDEFINISI DI BATAS INI (misalnya ln(0) atau pembagian nol)</span>';
+            el.definiteSteps.innerHTML = "";
+            beepError();
+            return;
+        }
 
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            beepClick();
-            state.history = [];
-            exprInput.value = '';
-            render();
-        });
+        const F = shapeTermsToDisplay(entry.capTerms, false) || "0";
+        const value = valB - valA;
 
-        document.getElementById('copyBtn').addEventListener('click', () => {
-            if(state.history.length === 0) return;
-            const last = state.history[state.history.length - 1];
-            navigator.clipboard.writeText(last.result).then(() => {
-                const btn = document.getElementById('copyBtn');
-                const old = btn.textContent;
-                btn.textContent = '✔ TERSALIN!';
-                setTimeout(() => btn.textContent = old, 1200);
-            }).catch(()=>{});
-            beepClick();
-        });
+        el.definiteSteps.innerHTML =
+        '<div class="def-line">∫<sub>' + fmtNum(a) + "</sub><sup>" + fmtNum(b) + "</sup> (" + escapeHtml(entry.input) + ") dx</div>" +
+        '<div class="def-line">= [ ' + escapeHtml(F) + " ]<sub>" + fmtNum(a) + "</sub><sup>" + fmtNum(b) + "</sup></div>" +
+        '<div class="def-line">= (' + fmtNum(valB) + ") - (" + fmtNum(valA) + ")</div>";
 
-        document.getElementById('muteBtn').addEventListener('click', function(){
-            soundOn = !soundOn;
-            this.textContent = soundOn ? '🔊 SUARA: ON' : '🔇 SUARA: OFF';
-        });
+        el.definiteResult.innerHTML = '<span class="def-value">= ' + fmtNum(value) + "</span>";
 
-        const tokens = ['x','x^','+','-','*','/','(',')','sin(x)','cos(x)','tan(x)','e^x','^2','^3'];
-        const quickWrap = document.getElementById('quickButtons');
-        tokens.forEach(tok => {
-            const b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'tok-btn';
+        beepBoss();
+    }
+
+    function insertAtCursor(input, text) {
+        input.focus();
+        const start = input.selectionStart ?? input.value.length;
+        const end = input.selectionEnd ?? input.value.length;
+        const val = input.value;
+        input.value = val.slice(0, start) + text + val.slice(end);
+        const pos = start + text.length;
+        input.setSelectionRange(pos, pos);
+    }
+
+    const TOKENS = ["x", "x^", "+", "-", "*", "/", "(", ")", "sin(x)", "cos(x)", "tan(x)", "e^x", "ln(x)", "^2", "^3"];
+    const PRESETS = ["2x", "3x^2 + 2x", "sin(x)", "cos(x)", "e^x", "1/x", "5x^4 - 3x^2 + 7", "2^x", "ln(x)"];
+
+    function buildTokenButtons() {
+        const quickWrap = document.getElementById("quickButtons");
+        TOKENS.forEach((tok) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "tok-btn";
             b.textContent = tok;
-            b.addEventListener('click', () => {
-                insertAtCursor(exprInput, tok);
-                beepClick();
-            });
+            b.addEventListener("click", () => { insertAtCursor(el.exprInput, tok); beepClick(); });
             quickWrap.appendChild(b);
         });
 
-        const presets = ['2x','3x^2 + 2x','sin(x)','cos(x)','e^x','1/x','5x^4 - 3x^2 + 7','2^x'];
-        const presetWrap = document.getElementById('presetButtons');
-        presets.forEach(p => {
-            const b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'preset-btn';
+        const presetWrap = document.getElementById("presetButtons");
+        PRESETS.forEach((p) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "preset-btn";
             b.textContent = p;
-            b.addEventListener('click', () => {
-                exprInput.value = p;
-                exprInput.focus();
-                beepClick();
-            });
+            b.addEventListener("click", () => { el.exprInput.value = p; el.exprInput.focus(); beepClick(); });
             presetWrap.appendChild(b);
         });
+    }
 
-        function insertAtCursor(input, text){
-            input.focus();
-            const start = input.selectionStart ?? input.value.length;
-            const end = input.selectionEnd ?? input.value.length;
-            const val = input.value;
-            input.value = val.slice(0, start) + text + val.slice(end);
-            const pos = start + text.length;
-            input.setSelectionRange(pos, pos);
-        }
+    function wireEvents() {
+        document.getElementById("calcBtn").addEventListener("click", () => {
+            const v = el.exprInput.value.trim();
+            if (!v) { showError("MASUKKAN FUNGSI DULU, PLAYER!"); return; }
+            beepClick();
+            doIntegrate(v);
+        });
 
-        render();
+        el.exprInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") document.getElementById("calcBtn").click();
+        });
+
+            document.getElementById("integrateAgainBtn").addEventListener("click", () => {
+                if (state.history.length === 0) return;
+                beepClick();
+                const last = currentEntry();
+                const nextInput = last.display.replace(/\s*\+\s*C\s*$/, "");
+                doIntegrate(nextInput);
+            });
+
+            document.getElementById("undoBtn").addEventListener("click", () => {
+                if (state.history.length === 0) return;
+                beepClick();
+                state.history.pop();
+                renderIndefinite();
+            });
+
+            document.getElementById("resetBtn").addEventListener("click", () => {
+                beepClick();
+                state.history = [];
+                el.exprInput.value = "";
+                renderIndefinite();
+            });
+
+            document.getElementById("copyBtn").addEventListener("click", () => {
+                if (state.history.length === 0) return;
+                const last = currentEntry();
+                navigator.clipboard.writeText(last.display).then(() => {
+                    const btn = document.getElementById("copyBtn");
+                    const old = btn.textContent;
+                    btn.textContent = "✔ TERSALIN!";
+                    setTimeout(() => (btn.textContent = old), 1200);
+                }).catch(() => {});
+                beepClick();
+            });
+
+            document.getElementById("muteBtn").addEventListener("click", function () {
+                soundOn = !soundOn;
+                this.textContent = soundOn ? "🔊 SUARA: ON" : "🔇 SUARA: OFF";
+            });
+
+            document.getElementById("computeDefiniteBtn").addEventListener("click", () => {
+                beepClick();
+                computeDefinite();
+            });
+
+            [el.boundA, el.boundB].forEach((input) => {
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") document.getElementById("computeDefiniteBtn").click();
+                });
+            });
+    }
+
+    buildTokenButtons();
+    wireEvents();
+    renderIndefinite();
 })();
