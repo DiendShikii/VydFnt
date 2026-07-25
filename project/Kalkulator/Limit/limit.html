@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="limit.css">
+</head>
+<body>
+
+<div class="noise"></div>
+
+<div class="app">
+
+  <header class="hero">
+    <div class="hero-badge">Kalkulator</div>
+    <h1 class="hero-title">Kalkulator&nbsp;Limit<span class="dot">.</span></h1>
+    <p class="hero-sub">Hitung nilai pendekatan fungsi saat <em>x</em> mendekati suatu titik dua arah, satu arah, atau menuju tak hingga.</p>
+
+    <div class="limit-strip" aria-hidden="true">
+      <svg viewBox="0 0 600 90" class="limit-svg">
+        <line x1="10" y1="45" x2="590" y2="45" stroke="#101010" stroke-width="4"/>
+        <circle cx="300" cy="45" r="7" fill="#101010"/>
+        <text x="300" y="78" text-anchor="middle" class="limit-label">a</text>
+        <circle class="approach-dot dot-left" cx="120" cy="45" r="9"/>
+        <circle class="approach-dot dot-right" cx="480" cy="45" r="9"/>
+      </svg>
+      <div class="limit-strip-caption">x → a⁻&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x → a⁺</div>
+    </div>
+  </header>
+
+  <main class="grid">
+
+    <section class="panel panel-input">
+      <h2 class="panel-title">1. Fungsi &amp; Titik</h2>
+
+      <label class="field">
+        <span class="field-label">f(x) =</span>
+        <input id="funcInput" type="text" placeholder="contoh: (x^2-1)/(x-1)" autocomplete="off" spellcheck="false">
+      </label>
+
+      <div class="hint">Gunakan: <code>^</code> pangkat, <code>sqrt()</code>, <code>sin cos tan</code>, <code>ln()</code>, <code>log()</code>, <code>pi</code>, <code>e</code></div>
+
+      <label class="field">
+        <span class="field-label">x menuju</span>
+        <input id="targetInput" type="text" placeholder="contoh: 1  atau  inf  atau  -inf" autocomplete="off" spellcheck="false">
+      </label>
+
+      <div class="quick-row">
+        <button class="chip chip-quick" data-target="0">0</button>
+        <button class="chip chip-quick" data-target="1">1</button>
+        <button class="chip chip-quick" data-target="-1">-1</button>
+        <button class="chip chip-quick" data-target="inf">∞</button>
+        <button class="chip chip-quick" data-target="-inf">-∞</button>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Arah pendekatan</span>
+        <div class="mode-switch" id="modeSwitch">
+          <button class="mode-btn active" data-mode="both">Dua Arah</button>
+          <button class="mode-btn" data-mode="left">Kiri (x→a⁻)</button>
+          <button class="mode-btn" data-mode="right">Kanan (x→a⁺)</button>
+        </div>
+      </div>
+
+      <button id="calcBtn" class="btn-main">Hitung Limit →</button>
+      <div id="errorBox" class="error-box hidden"></div>
+
+      <div class="examples">
+        <h3 class="panel-subtitle">Contoh Soal</h3>
+        <div class="example-chips" id="exampleChips"></div>
+      </div>
+    </section>
+
+    <section class="panel panel-result">
+      <h2 class="panel-title">2. Hasil</h2>
+      <div id="resultBox" class="result-box result-empty">
+        <p>Belum ada perhitungan. Isi fungsi dan titik di sebelah kiri, lalu klik <strong>Hitung Limit</strong>.</p>
+      </div>
+
+      <div id="tableSection" class="table-section hidden">
+        <h3 class="panel-subtitle">Tabel Pendekatan Nilai</h3>
+        <div class="tables-wrap" id="tablesWrap"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="panel panel-history">
+    <div class="history-head">
+      <h2 class="panel-title">Riwayat Perhitungan</h2>
+      <button id="clearHistory" class="btn-ghost">Hapus Riwayat</button>
+    </div>
+    <div id="historyList" class="history-list">
+      <p class="history-empty">Riwayat kosong.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>@2026 VydFnt</span>
+  </footer>
+
+</div>
+
+<script src="limit.js"></script>
+</body>
+</html>

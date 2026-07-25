@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="sincostan.css">
+</head>
+<body>
+
+<main class="app clay">
+  <div class="app-header">
+    <div class="badge clay-inset">∠</div>
+    <div>
+      <h1>Kalkulator Trigonometri</h1>
+      <p>Sin Cos Tan</p>
+    </div>
+  </div>
+
+  <div class="func-row clay-inset">
+    <button class="func-btn active" data-func="sin">sin</button>
+    <button class="func-btn" data-func="cos">cos</button>
+    <button class="func-btn" data-func="tan">tan</button>
+  </div>
+
+  <div class="toggle-row">
+    <div class="toggle-pill clay-inset">
+      <button class="active" data-mode="deg">Derajat °</button>
+      <button data-mode="rad">Radian</button>
+    </div>
+    <button class="inv-toggle clay-pressable clay" id="invBtn" title="Hitung kebalikan (arc), hasil berupa sudut">
+      f⁻¹
+    </button>
+  </div>
+
+  <div class="input-block clay-inset">
+    <label class="input-label" for="angleInput" id="inputLabel">Masukkan sudut</label>
+    <div class="input-row">
+      <input id="angleInput" type="number" inputmode="decimal" placeholder="0" step="any" />
+      <span class="unit-tag clay" id="unitTag">°</span>
+    </div>
+  </div>
+
+  <div class="chip-row" id="chipRow">
+  </div>
+
+  <div class="result-panel clay-inset">
+    <div class="result-expr" id="resultExpr">sin(0°) =</div>
+    <div class="result-value" id="resultValue">0</div>
+    <div class="result-extra" id="resultExtra"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-hitung clay-pressable" id="calcBtn">Hitung</button>
+    <button class="btn-reset clay clay-pressable" id="resetBtn">Reset</button>
+  </div>
+
+  <div class="history clay-inset">
+    <div class="history-title">
+      <span>Riwayat</span>
+      <button id="clearHistory">Hapus semua</button>
+    </div>
+    <ul class="history-list" id="historyList">
+      <li class="history-empty" id="historyEmpty" style="display:block; list-style:none;">Belum ada riwayat perhitungan.(save hitungan disini aja)</li>
+    </ul>
+  </div>
+</main>
+
+<script src="sincostan.js"></script>
+</body>
+</html>
