@@ -26,11 +26,83 @@
     const beepBoss = () => { beep(440, 0.07); setTimeout(() => beep(660, 0.07), 80); setTimeout(() => beep(990, 0.12), 160); };
     const beepError = () => beep(120, 0.18);
 
+    function gcd(a, b) {
+        a = Math.abs(a); b = Math.abs(b);
+        while (b) { [a, b] = [b, a % b]; }
+        return a || 1;
+    }
+    function makeFrac(num, den) {
+        if (den < 0) { num = -num; den = -den; }
+        const g = gcd(num, den) || 1;
+        return { num: num / g, den: den / g };
+    }
+    function isFrac(c) { return c !== null && typeof c === "object" && "num" in c; }
+    function fracMulInt(f, k) { return makeFrac(f.num * k, f.den); }
+    function fracDivInt(f, k) { return makeFrac(f.num, f.den * k); }
+    function fracNeg(f) { return { num: -f.num, den: f.den }; }
+    function coeffToDecimal(c) { return isFrac(c) ? c.num / c.den : c; }
+
+    function parseDecimalToFrac(str) {
+        if (str === "" || str === undefined) return { num: 1, den: 1 };
+        const dot = str.indexOf(".");
+        if (dot === -1) {
+            const n = parseInt(str, 10);
+            return makeFrac(isNaN(n) ? 1 : n, 1);
+        }
+        const intPart = str.slice(0, dot) || "0";
+        const fracPart = str.slice(dot + 1);
+        const den = Math.pow(10, fracPart.length);
+        const num = parseInt(intPart + fracPart, 10);
+        return makeFrac(num, den);
+    }
+
+    function decimalToNiceFraction(x, tolerance = 1e-9, maxDen = 1000) {
+        if (!isFinite(x)) return null;
+        if (Number.isInteger(x)) return { num: x, den: 1 };
+        const sign = x < 0 ? -1 : 1;
+        const ax = Math.abs(x);
+        let h1 = 1, h2 = 0, k1 = 0, k2 = 1, b = ax;
+        for (let i = 0; i < 30; i++) {
+            const a = Math.floor(b);
+            const h = a * h1 + h2, k = a * k1 + k2;
+            h2 = h1; h1 = h; k2 = k1; k1 = k;
+            if (k1 > maxDen) break;
+            if (Math.abs(ax - h1 / k1) <= tolerance) break;
+            const rem = b - a;
+            if (rem < 1e-12) break;
+            b = 1 / rem;
+        }
+        if (k1 <= maxDen && Math.abs(ax - h1 / k1) <= tolerance) return makeFrac(sign * h1, k1);
+        return null;
+    }
 
     function fmtNum(n) {
         n = Math.round(n * 1e8) / 1e8;
         if (Object.is(n, -0)) n = 0;
         return n.toString();
+    }
+
+    function formatDecimalMaybeFraction(value) {
+        if (Number.isInteger(value)) return fmtNum(value);
+        const f = decimalToNiceFraction(value);
+        if (f) return (f.num < 0 ? "-" : "") + Math.abs(f.num) + "/" + f.den;
+        return fmtNum(value);
+    }
+
+    function coeffSignAndAbs(coeff) {
+        if (isFrac(coeff)) {
+            const sign = coeff.num < 0 ? -1 : 1;
+            return { sign, abs: { num: Math.abs(coeff.num), den: coeff.den } };
+        }
+        return { sign: coeff < 0 ? -1 : 1, abs: Math.abs(coeff) };
+    }
+
+    function formatCoeffMagnitude(abs) {
+        if (isFrac(abs)) {
+            if (abs.den === 1) return { text: abs.num === 1 ? "" : String(abs.num), isOne: abs.num === 1 };
+            return { text: abs.num + "/" + abs.den, isOne: false, isFrac: true };
+        }
+        return { text: abs === 1 ? "" : fmtNum(abs), isOne: abs === 1 };
     }
 
     function normalizeExpr(raw) {
@@ -53,20 +125,20 @@
     function parseTerm(body) {
         body = body.replace(/~/g, "-");
         let m;
-        const num = (g) => (g === "" || g === undefined ? 1 : parseFloat(g));
+        const frac = (g) => parseDecimalToFrac(g === undefined ? "" : g);
 
-        if ((m = body.match(/^(\d*\.?\d*)\*?sin\(x\)$/))) return { kind: "sin", coeff: num(m[1]) };
-        if ((m = body.match(/^(\d*\.?\d*)\*?cos\(x\)$/))) return { kind: "cos", coeff: num(m[1]) };
-        if ((m = body.match(/^(\d*\.?\d*)\*?tan\(x\)$/))) return { kind: "tan", coeff: num(m[1]) };
-        if ((m = body.match(/^(\d*\.?\d*)\*?ln\(x\)$/))) return { kind: "lnAbsX", coeff: num(m[1]) };
-        if ((m = body.match(/^(\d*\.?\d*)\*?e\^x$/))) return { kind: "exp", coeff: num(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?sin\(x\)$/))) return { kind: "sin", coeff: frac(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?cos\(x\)$/))) return { kind: "cos", coeff: frac(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?tan\(x\)$/))) return { kind: "tan", coeff: frac(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?ln\(x\)$/))) return { kind: "lnAbsX", coeff: frac(m[1]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?e\^x$/))) return { kind: "exp", coeff: frac(m[1]) };
         if ((m = body.match(/^(\d*\.?\d*)\*?(\d+(?:\.\d+)?)\^x$/)))
-            return { kind: "expBase", coeff: num(m[1]), base: parseFloat(m[2]) };
-        if ((m = body.match(/^(\d*\.?\d*)\/x$/))) return { kind: "poly", coeff: num(m[1]), power: -1 };
+            return { kind: "expBase", coeff: frac(m[1]), base: parseFloat(m[2]) };
+        if ((m = body.match(/^(\d*\.?\d*)\/x$/))) return { kind: "poly", coeff: frac(m[1]), power: -1 };
         if ((m = body.match(/^(\d*\.?\d*)\*?x\^(-?\d+(?:\.\d+)?)$/)))
-            return { kind: "poly", coeff: num(m[1]), power: parseFloat(m[2]) };
-        if ((m = body.match(/^(\d*\.?\d*)\*?x$/))) return { kind: "poly", coeff: num(m[1]), power: 1 };
-        if ((m = body.match(/^(\d+(?:\.\d+)?)$/))) return { kind: "poly", coeff: parseFloat(m[1]), power: 0 };
+            return { kind: "poly", coeff: frac(m[1]), power: parseFloat(m[2]) };
+        if ((m = body.match(/^(\d*\.?\d*)\*?x$/))) return { kind: "poly", coeff: frac(m[1]), power: 1 };
+        if ((m = body.match(/^(\d+(?:\.\d+)?)$/))) return { kind: "poly", coeff: parseDecimalToFrac(m[1]), power: 0 };
 
         throw new Error('TERM "' + body.toUpperCase() + '" TIDAK DIKENALI');
     }
@@ -76,34 +148,37 @@
         const terms = splitTerms(expr);
         return terms.map((t) => {
             const p = parseTerm(t.body);
-            return { kind: p.kind, coeff: t.sign * p.coeff, power: p.power, base: p.base };
+            return { kind: p.kind, coeff: fracMulInt(p.coeff, t.sign), power: p.power, base: p.base };
         });
     }
 
     function integrateShapeTerm(term) {
         switch (term.kind) {
             case "sin":
-                return [{ kind: "cos", coeff: -term.coeff }];
+                return [{ kind: "cos", coeff: fracNeg(term.coeff) }];
             case "cos":
                 return [{ kind: "sin", coeff: term.coeff }];
             case "tan":
-                return [{ kind: "lnAbsCos", coeff: -term.coeff }];
+                return [{ kind: "lnAbsCos", coeff: fracNeg(term.coeff) }];
             case "exp":
                 return [{ kind: "exp", coeff: term.coeff }];
             case "expBase": {
                 const denom = Math.log(term.base);
-                return [{ kind: "expBase", coeff: term.coeff / denom, base: term.base }];
+                return [{ kind: "expBase", coeff: coeffToDecimal(term.coeff) / denom, base: term.base }];
             }
             case "lnAbsX":
                 return [
                     { kind: "xlnx", coeff: term.coeff },
-                    { kind: "poly", coeff: -term.coeff, power: 1 },
+                    { kind: "poly", coeff: fracNeg(term.coeff), power: 1 },
                 ];
             case "poly":
                 if (term.power === -1) return [{ kind: "lnAbsX", coeff: term.coeff }];
                 {
                     const newPower = term.power + 1;
-                    return [{ kind: "poly", coeff: term.coeff / newPower, power: newPower }];
+                    const coeff = Number.isInteger(newPower)
+                    ? fracDivInt(term.coeff, newPower)
+                    : coeffToDecimal(term.coeff) / newPower;
+                    return [{ kind: "poly", coeff, power: newPower }];
                 }
             default:
                 throw new Error("ATURAN INTEGRAL TIDAK DITEMUKAN");
@@ -141,16 +216,18 @@
     function shapeTermsToDisplay(terms, withC) {
         let out = "";
         terms.forEach((term, i) => {
-            const magnitude = Math.abs(term.coeff);
-            const sign2 = term.coeff < 0 ? "-" : "+";
+            const { sign, abs } = coeffSignAndAbs(term.coeff);
+            const sign2 = sign < 0 ? "-" : "+";
+            const mag = formatCoeffMagnitude(abs);
             const shape = shapeToString(term);
+            const magText = mag.isFrac ? "(" + mag.text + ")" : mag.text;
             let prefix;
-            if (magnitude === 1) {
+            if (mag.isOne) {
                 prefix = "";
             } else if (needsExplicitMul(term.kind)) {
-                prefix = fmtNum(magnitude) + "*";
+                prefix = magText + "*";
             } else {
-                prefix = fmtNum(magnitude);
+                prefix = magText;
             }
             const body = prefix + shape;
             out += i === 0 ? (sign2 === "-" ? "-" : "") + body : " " + sign2 + " " + body;
@@ -160,16 +237,17 @@
     }
 
     function evalShapeTerm(term, x) {
+        const c = coeffToDecimal(term.coeff);
         switch (term.kind) {
-            case "poly": return term.coeff * Math.pow(x, term.power);
-            case "sin": return term.coeff * Math.sin(x);
-            case "cos": return term.coeff * Math.cos(x);
-            case "tan": return term.coeff * Math.tan(x);
-            case "exp": return term.coeff * Math.exp(x);
-            case "expBase": return term.coeff * Math.pow(term.base, x);
-            case "lnAbsX": return term.coeff * Math.log(Math.abs(x));
-            case "lnAbsCos": return term.coeff * Math.log(Math.abs(Math.cos(x)));
-            case "xlnx": return term.coeff * x * Math.log(Math.abs(x));
+            case "poly": return c * Math.pow(x, term.power);
+            case "sin": return c * Math.sin(x);
+            case "cos": return c * Math.cos(x);
+            case "tan": return c * Math.tan(x);
+            case "exp": return c * Math.exp(x);
+            case "expBase": return c * Math.pow(term.base, x);
+            case "lnAbsX": return c * Math.log(Math.abs(x));
+            case "lnAbsCos": return c * Math.log(Math.abs(Math.cos(x)));
+            case "xlnx": return c * x * Math.log(Math.abs(x));
             default: return NaN;
         }
     }
@@ -192,7 +270,7 @@
     }
 
     const state = {
-        history: [],
+        history: [], 
         boundA: 0,
         boundB: 1,
     };
@@ -220,7 +298,6 @@
     function currentEntry() {
         return state.history[state.history.length - 1] || null;
     }
-
 
     function renderIndefinite() {
         if (state.history.length === 0) {
@@ -253,6 +330,7 @@
             el.historyList.appendChild(div);
         });
         el.historyList.scrollTop = el.historyList.scrollHeight;
+
         el.definiteSteps.innerHTML = "";
         el.definiteResult.textContent = "";
     }
@@ -265,7 +343,7 @@
         beepError();
     }
 
-    function doIntegrate(inputExpr) {
+    function doIntegrateFromText(inputExpr) {
         try {
             const { fTerms, capTerms, display } = integrateExpression(inputExpr);
             state.history.push({ input: inputExpr, display, fTerms, capTerms });
@@ -273,6 +351,21 @@
             beepSuccess();
         } catch (err) {
             showError(err.message || "EKSPRESI TIDAK VALID");
+        }
+    }
+
+    function doIntegrateAgain() {
+        const prev = currentEntry();
+        if (!prev) return;
+        try {
+            const fTerms = prev.capTerms;
+            const capTerms = integrateShapeTerms(fTerms);
+            const display = shapeTermsToDisplay(capTerms, true);
+            state.history.push({ input: prev.display.replace(/\s*\+\s*C\s*$/, ""), display, fTerms, capTerms });
+            renderIndefinite();
+            beepSuccess();
+        } catch (err) {
+            showError(err.message || "TIDAK BISA DIINTEGRALKAN LAGI");
         }
     }
 
@@ -308,9 +401,9 @@
         el.definiteSteps.innerHTML =
         '<div class="def-line">∫<sub>' + fmtNum(a) + "</sub><sup>" + fmtNum(b) + "</sup> (" + escapeHtml(entry.input) + ") dx</div>" +
         '<div class="def-line">= [ ' + escapeHtml(F) + " ]<sub>" + fmtNum(a) + "</sub><sup>" + fmtNum(b) + "</sup></div>" +
-        '<div class="def-line">= (' + fmtNum(valB) + ") - (" + fmtNum(valA) + ")</div>";
+        '<div class="def-line">= (' + formatDecimalMaybeFraction(valB) + ") - (" + formatDecimalMaybeFraction(valA) + ")</div>";
 
-        el.definiteResult.innerHTML = '<span class="def-value">= ' + fmtNum(value) + "</span>";
+        el.definiteResult.innerHTML = '<span class="def-value">= ' + formatDecimalMaybeFraction(value) + "</span>";
 
         beepBoss();
     }
@@ -355,7 +448,7 @@
             const v = el.exprInput.value.trim();
             if (!v) { showError("MASUKKAN FUNGSI DULU, PLAYER!"); return; }
             beepClick();
-            doIntegrate(v);
+            doIntegrateFromText(v);
         });
 
         el.exprInput.addEventListener("keydown", (e) => {
@@ -365,9 +458,7 @@
             document.getElementById("integrateAgainBtn").addEventListener("click", () => {
                 if (state.history.length === 0) return;
                 beepClick();
-                const last = currentEntry();
-                const nextInput = last.display.replace(/\s*\+\s*C\s*$/, "");
-                doIntegrate(nextInput);
+                doIntegrateAgain();
             });
 
             document.getElementById("undoBtn").addEventListener("click", () => {
