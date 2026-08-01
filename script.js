@@ -406,26 +406,6 @@ function createParticles() {
 
 createParticles();
 
-(function addTypingCursor() {
-  const titleName = document.querySelector(".title-name");
-  if (!titleName) return;
-  const cursor = document.createElement("span");
-  cursor.textContent = "_";
-  cursor.style.cssText = `
-  color: var(--accent);
-  animation: blink 1s step-end infinite;
-  margin-left: 2px;
-  font-weight: 400;
-  `;
-  if (!document.getElementById("blinkStyle")) {
-    const s = document.createElement("style");
-    s.id = "blinkStyle";
-    s.textContent = `@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }`;
-    document.head.appendChild(s);
-  }
-  titleName.appendChild(cursor);
-})();
-
 if (window.matchMedia("(hover: hover)").matches) {
   function addTilt(selector, maxTilt = 8) {
     document.querySelectorAll(selector).forEach(el => {
@@ -447,7 +427,6 @@ if (window.matchMedia("(hover: hover)").matches) {
     });
   }
 
-  addTilt(".info-card", 6);
   addTilt(".cert-card", 5);
   addTilt(".project-category-card", 5);
   addTilt(".tool-card", 8);
@@ -514,7 +493,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 console.log("%cVydFnt Portfolio", "color: #e53e3e; font-size: 24px; font-weight: bold; font-family: monospace;");
-console.log("%cDibuat dengan ❤ menggunakan HTML, CSS & Vanilla JS", "color: #888; font-size: 12px;");
+console.log("%cDibuat dengan menggunakan HTML, CSS & JS", "color: #888; font-size: 12px;");
 
 (function initCertLightbox() {
   const lightbox   = document.getElementById("certLightbox");
@@ -633,4 +612,33 @@ console.log("%cDibuat dengan ❤ menggunakan HTML, CSS & Vanilla JS", "color: #8
       const diff = swipeStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) goto(current + (diff > 0 ? 1 : -1));
     });
+})();
+
+(function initPhotoFrame() {
+  const frame = document.getElementById("photoFrame");
+  const inner = frame ? frame.querySelector(".photo-frame-inner") : null;
+  if (!frame || !inner) return;
+
+  const maxTilt = 8; // degrees
+
+  function onMove(e) {
+    const rect = frame.getBoundingClientRect();
+    const point = e.touches ? e.touches[0] : e;
+    const x = (point.clientX - rect.left) / rect.width;  // 0 - 1
+    const y = (point.clientY - rect.top) / rect.height;  // 0 - 1
+
+    const rotateY = (x - 0.5) * maxTilt * 2;
+    const rotateX = (0.5 - y) * maxTilt * 2;
+
+    inner.style.transform = `perspective(900px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  }
+
+  function resetTilt() {
+    inner.style.transform = "";
+  }
+
+  frame.addEventListener("mousemove", onMove);
+  frame.addEventListener("mouseleave", resetTilt);
+  frame.addEventListener("touchmove", onMove, { passive: true });
+  frame.addEventListener("touchend", resetTilt);
 })();
